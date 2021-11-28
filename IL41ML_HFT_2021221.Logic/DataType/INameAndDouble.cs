@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace IL41ML_HFT_2021221.Logic.DataType
 {
-    internal interface INameAndDouble
+    public interface INameAndDouble
     {
         string Name { get; set; }
         double Average { get; set; }

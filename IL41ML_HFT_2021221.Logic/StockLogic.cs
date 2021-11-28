@@ -18,6 +18,11 @@ namespace IL41ML_HFT_2021221.Logic
             this.brandRepo = brandRepo;
             this.modelRepo = modelRepo;
         }
+
+        public void InsertModel(Model input)
+        {
+            this.modelRepo.Insert(input);
+        }
         public void InsertModel(int brandid, string name, string modelName, int size, string color, int price)
         {
             Model newModel = new Model()

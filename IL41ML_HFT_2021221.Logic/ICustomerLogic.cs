@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace IL41ML_HFT_2021221.Logic
 {
-    internal interface ICustomerLogic
+    public interface ICustomerLogic
     {
         IList<Model> ListModels();
 

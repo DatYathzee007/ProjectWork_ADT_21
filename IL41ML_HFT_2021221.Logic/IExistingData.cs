@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace IL41ML_HFT_2021221.Logic
 {
-    internal interface IExistingData
+    public interface IExistingData
     {
         bool IsExisting(int id, string table);
     }

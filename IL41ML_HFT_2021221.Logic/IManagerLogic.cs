@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace IL41ML_HFT_2021221.Logic
 {
-    internal interface IManagerLogic
+    public interface IManagerLogic
     {
         void InsertBrand(string name, string country, string ceo, string source, DateTime foundation);
         void InsertShop(int brandid, int serviceid, string name, string country, string city, string phone, string address);
