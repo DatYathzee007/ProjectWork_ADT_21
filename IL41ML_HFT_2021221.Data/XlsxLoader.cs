@@ -67,6 +67,7 @@
         private static void XlsxGetDataModel(string connString)
         {
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            //var asd = new FileInfo(connString);
             using (ExcelPackage xlPackage = new ExcelPackage(new FileInfo(connString)))
             {
                 var myWorksheet = xlPackage.Workbook.Worksheets.First();
