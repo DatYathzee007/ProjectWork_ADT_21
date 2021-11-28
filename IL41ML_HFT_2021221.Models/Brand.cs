@@ -5,6 +5,7 @@
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Text;
+    using System.Text.Json.Serialization;
 
     /// <summary>
     /// <see cref="Brand"/> Entity class representin the table Brand in the database.
@@ -64,18 +65,21 @@
         /// Gets the Navigational collection property to the <see cref="Model"/>.
         /// </summary>
         [NotMapped]
+        [JsonIgnore]
         public virtual ICollection<Model> Models { get; }
 
         /// <summary>
         /// Gets the Navigational collection property to the <see cref="Service"/>.
         /// </summary>
         [NotMapped]
+        [JsonIgnore]
         public virtual ICollection<Service> Services { get; }
 
         /// <summary>
         /// Gets the Navigational collection property to the <see cref="Shop"/>.
         /// </summary>
         [NotMapped]
+        [JsonIgnore]
         public virtual ICollection<Shop> Shops { get; }
 
         /// <summary>

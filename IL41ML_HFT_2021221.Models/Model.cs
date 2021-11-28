@@ -49,7 +49,7 @@
         /// <summary>
         /// Gets or Sets the Size of a Model.
         /// </summary>
-        [MaxLength(100)]
+        //[MaxLength(100)]
         public int Size { get; set; }
 
         /// <summary>
@@ -62,7 +62,7 @@
         /// <summary>
         /// Gets or Sets the price of a Model.
         /// </summary>
-        [MaxLength(100)]
+        //[MaxLength(100)]
         public int Price { get; set; }
 
         /// <summary>

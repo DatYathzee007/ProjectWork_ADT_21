@@ -5,6 +5,7 @@
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Text;
+    using System.Text.Json.Serialization;
 
     /// <summary>
     /// <see cref="Service"/> Entity class representin the table Service in the database.
@@ -38,6 +39,7 @@
         /// Gets or Sets the navigational property for the brand entity.
         /// </summary>
         [NotMapped]
+        [JsonIgnore]
         public virtual Brand Brand { get; set; }
 
         /// <summary>
@@ -86,6 +88,7 @@
         /// Gets the Navigational collection property to the <see cref="Shop"/>.
         /// </summary>
         [NotMapped]
+        [JsonIgnore]
         public virtual ICollection<Shop> Shops { get; }
 
         /// <summary>
