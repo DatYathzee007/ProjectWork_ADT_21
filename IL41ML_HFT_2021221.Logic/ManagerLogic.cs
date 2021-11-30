@@ -23,9 +23,9 @@ namespace IL41ML_HFT_2021221.Logic
             this.shopRepo = shopRepo;
         }
 
-        public void ChangeBrandCEO(int id, string name)
+        public void ChangeBrandCEO(int id, string ceo)
         {
-            this.brandRepo.ChangeCEO(id, name);
+            this.brandRepo.ChangeCEO(id, ceo);
         }
 
         public void ChangeModelPrice(int id, int price)
@@ -57,67 +57,39 @@ namespace IL41ML_HFT_2021221.Logic
             this.shopRepo.ChangePhoneNumber(id, phone);
         }
 
-        public void InsertBrand(string name, string country, string ceo, string source, DateTime foundation)
+        public void InsertBrand(Brand input)
         {
-            if (name == null || country == null || ceo == null || source == null || foundation == /*null*/ new DateTime())
+            if (input.Name == null || input.Country == null || input.CEO == null || input.Source == null || input.Foundation == /*null*/ new DateTime())
             {
-                throw new ArgumentNullException(nameof(name));
+                throw new ArgumentNullException(nameof(input.Name));
             }
             else
             {
-                Brand newBrand = new Brand()
-                {
-                    Name = name,
-                    Country = country,
-                    CEO = ceo,
-                    Source = source,
-                    Foundation = foundation,
-                };
-                this.brandRepo.Insert(newBrand);
+                this.brandRepo.Insert(input);
             }
         }
 
-        public void InsertService(int brandid, string name, string country, string city, string address, string web, string phone)
+        public void InsertService(Service input)
         {
-            if (this.brandRepo.GetAll().Count() < brandid || brandid <= 0 || name == null || country == null || city == null || address == null || web == null || phone == null)
+            if (this.brandRepo.GetAll().Count() >= input.BrandId || input.BrandId >= 0 || input.ServiceName == null || input.Country == null || input.City == null || input.Address == null || input.WebPage == null || input.PhoneNr == null)
             {
-                throw new ArgumentNullException(nameof(name));
+                throw new ArgumentNullException(nameof(input.ServiceName));
             }
             else
             {
-                Service newService = new Service()
-                {
-                    BrandId = brandid,
-                    ServiceName = name,
-                    Country = country,
-                    City = city,
-                    Address = address,
-                    WebPage = web,
-                    PhoneNr = phone,
-                };
-                this.serviceRepo.Insert(newService);
+                this.serviceRepo.Insert(input);
             }
         }
 
-        public void InsertShop(int brandid, int serviceid, string name, string country, string city, string phone, string address)
+        public void InsertShop(Shop input)
         {
-            if (this.brandRepo.GetAll().Count() < brandid || brandid <= 0 || this.serviceRepo.GetAll().Count() < serviceid || serviceid <= 0 || name == null || country == null || city == null || address == null || phone == null)
+            if (this.brandRepo.GetAll().Count() >= input.BrandId || input.BrandId >= 0 || this.serviceRepo.GetAll().Count() >= input.ServiceId || input.ServiceId >= 0 || input.Name == null || input.Country == null || input.City == null || input.Address == null || input.Phone == null)
             {
-                throw new ArgumentNullException(nameof(name));
+                throw new ArgumentNullException(nameof(input.Name));
             }
             else
             {
-                Shop newShop = new Shop()
-                {
-                    BrandId = brandid,
-                    ServiceId = serviceid,
-                    Name = name,
-                    Country = country,
-                    City = city,
-                    Phone = phone,
-                    Address = address,
-                };
-                this.shopRepo.Insert(newShop);
+                this.shopRepo.Insert(input);
             }
         }
 

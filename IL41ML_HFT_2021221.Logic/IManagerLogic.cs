@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IL41ML_HFT_2021221.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,10 +9,10 @@ namespace IL41ML_HFT_2021221.Logic
 {
     public interface IManagerLogic
     {
-        void InsertBrand(string name, string country, string ceo, string source, DateTime foundation);
-        void InsertShop(int brandid, int serviceid, string name, string country, string city, string phone, string address);
-        void InsertService(int brandid, string name, string country, string city, string address, string web, string phone);
-        void ChangeBrandCEO(int id, string name);
+        void InsertBrand(Brand input);
+        void InsertShop(Shop input);
+        void InsertService(Service input);
+        void ChangeBrandCEO(int id, string ceo);
         void ChangeModelPrice(int id, int price);
         void ChangeServiceWeb(int id, string web);
         void ChangeServiceName(int id, string name);
