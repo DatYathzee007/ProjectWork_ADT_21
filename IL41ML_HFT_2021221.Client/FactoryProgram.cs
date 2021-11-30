@@ -378,10 +378,6 @@ namespace IL41ML_HFT_2021221.Client
             }
         }
 
-        /// <summary>
-        /// Implementation of <see cref="ManagerLogic.ChangeModelPrice(int, int)"/> method in <see cref="FactoryProgram"/>
-        /// with addition Console input parameters and wrong input handling and calling <see cref="Existingdata.IsExisting(int, string)"/> method.
-        /// </summary>
         public void ChangeModelPrice()
         {
             int id, price;
@@ -420,10 +416,6 @@ namespace IL41ML_HFT_2021221.Client
             }
         }
 
-        /// <summary>
-        /// Implementation of <see cref="ManagerLogic.ChangeServiceWeb(int, string)"/> method in <see cref="FactoryProgram"/>
-        /// with addition Console input parameters and wrong input handling and calling <see cref="Existingdata.IsExisting(int, string)"/> method.
-        /// </summary>
         public void ChangeServiceWeb()
         {
             int id;
@@ -456,10 +448,6 @@ namespace IL41ML_HFT_2021221.Client
             }
         }
 
-        /// <summary>
-        /// Implementation of <see cref="ManagerLogic.ChangeServiceName(int, string)"/> method in <see cref="FactoryProgram"/>
-        /// with addition Console input parameters and wrong input handling and calling <see cref="Existingdata.IsExisting(int, string)"/> method.
-        /// </summary>
         public void ChangeServiceName()
         {
             int id;
@@ -491,10 +479,6 @@ namespace IL41ML_HFT_2021221.Client
             }
         }
 
-        /// <summary>
-        /// Implementation of <see cref="ManagerLogic.ChangeServicePhone(int, string)"/> method in <see cref="FactoryProgram"/>
-        /// with addition Console input parameters and wrong input handling and calling <see cref="Existingdata.IsExisting(int, string)"/> method.
-        /// </summary>
         public void ChangeServicePhone()
         {
             int id;
@@ -526,10 +510,6 @@ namespace IL41ML_HFT_2021221.Client
             }
         }
 
-        /// <summary>
-        /// Implementation of <see cref="ManagerLogic.ChangeShopName(int, string)"/> method in <see cref="FactoryProgram"/>
-        /// with addition Console input parameters and wrong input handling and calling <see cref="Existingdata.IsExisting(int, string)"/> method.
-        /// </summary>
         public void ChangeShopName()
         {
             int id;
@@ -561,10 +541,6 @@ namespace IL41ML_HFT_2021221.Client
             }
         }
 
-        /// <summary>
-        /// Implementation of <see cref="ManagerLogic.ChangeShopPhone(int, string)"/> method in <see cref="FactoryProgram"/>
-        /// with addition Console input parameters and wrong input handling and calling <see cref="Existingdata.IsExisting(int, string)"/> method.
-        /// </summary>
         public void ChangeShopPhone()
         {
             int id;
@@ -596,10 +572,6 @@ namespace IL41ML_HFT_2021221.Client
             }
         }
 
-        /// <summary>
-        /// Implementation of <see cref="ManagerLogic.RemoveEntity(string, int)"/> method in <see cref="FactoryProgram"/>
-        /// with addition Console input parameters and wrong input handling and calling <see cref="Existingdata.IsExisting(int, string)"/> method.
-        /// </summary>
         public void RemoveEntityFP()
         {
             Console.WriteLine("Select table: Brand = 1 , Model = 2, Shop = 3, Service = 4");
