@@ -1,4 +1,5 @@
 ﻿using IL41ML_HFT_2021221.Logic;
+using IL41ML_HFT_2021221.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -18,92 +19,61 @@ namespace IL41ML_HFT_2021221.Endpoint.Controllers
         {
             this.managerLogic = managerLogic;
         }
-        // GET: api/<ManagerController>
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
 
-        // GET api/<ManagerController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpDelete("{table}/{id}")]
+        public void Delete(string table, int id)
         {
-            return "value";
+            this.managerLogic.RemoveEntity(table, id);
         }
-
-        // POST api/<ManagerController>
-        [HttpPost]
-        public void Post([FromBody] string value)
+        [HttpPost("[action]")]
+        public void InsertBrand([FromBody] Brand value)
         {
+            managerLogic.InsertBrand(value);
         }
-
-        // PUT api/<ManagerController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPost("[action]")]
+        public void InsertShop([FromBody] Shop value)
         {
+            managerLogic.InsertShop(value);
         }
-
-        // DELETE api/<ManagerController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpPost("[action]")]
+        public void InsertService([FromBody] Service value)
         {
-            this.managerLogic.RemoveEntity("Brand", id);
+            managerLogic.InsertService(value);
         }
-
-        public void InsertBrand(string name, string country, string ceo, string source, DateTime foundation)
+        [HttpPut("[action]")]
+        public void ChangeBrandCEO([FromBody] Brand value)
         {
-            throw new NotImplementedException();
+            managerLogic.ChangeBrandCEO(value.Id, value.CEO);
         }
-
-        public void InsertShop(int brandid, int serviceid, string name, string country, string city, string phone, string address)
+        [HttpPut("[action]")]
+        public void ChangeModelPrice([FromBody] Model value)
         {
-            throw new NotImplementedException();
+            managerLogic.ChangeModelPrice(value.Id, value.Price);
         }
-
-        public void InsertService(int brandid, string name, string country, string city, string address, string web, string phone)
+        [HttpPut("[action]")]
+        public void ChangeServiceWeb([FromBody] Service value)
         {
-            throw new NotImplementedException();
+            managerLogic.ChangeServiceWeb(value.Id, value.WebPage);
         }
-
-        public void ChangeBrandCEO(int id, string name)
+        [HttpPut("[action]")]
+        public void ChangeServiceName([FromBody] Service value)
         {
-            throw new NotImplementedException();
+            managerLogic.ChangeServiceName(value.Id, value.ServiceName);
         }
-
-        public void ChangeModelPrice(int id, int price)
+        [HttpPut("[action]")]
+        public void ChangeServicePhone([FromBody] Service value)
         {
-            throw new NotImplementedException();
+            managerLogic.ChangeServicePhone(value.Id, value.PhoneNr);
         }
-
-        public void ChangeServiceWeb(int id, string web)
+        [HttpPut("[action]")]
+        public void ChangeShopName([FromBody] Shop value)
         {
-            throw new NotImplementedException();
+            managerLogic.ChangeShopName(value.Id, value.Name);
         }
-
-        public void ChangeServiceName(int id, string name)
+        [HttpPut("[action]")]
+        public void ChangeShopPhone([FromBody] Shop value)
         {
-            throw new NotImplementedException();
-        }
-
-        public void ChangeServicePhone(int id, string phone)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void ChangeShopName(int id, string name)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void ChangeShopPhone(int id, string phone)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void RemoveEntity(string data, int id)
-        {
-            throw new NotImplementedException();
+            managerLogic.ChangeShopPhone(value.Id, value.Phone);
         }
     }
 }
