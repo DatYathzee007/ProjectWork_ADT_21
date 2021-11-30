@@ -55,17 +55,6 @@ namespace IL41ML_HFT_2021221.Client
             }
             return item;
         }
-        /*
-        public bool Get(int id, string endpoint)
-        {
-            bool result = false;
-            HttpResponseMessage response = client.GetAsync(endpoint).GetAwaiter().GetResult();
-            if (response.IsSuccessStatusCode)
-            {
-                result = response.Content.
-            }
-            return result;
-        }*/
         public T Get<T>(int id, string endpoint)
         {
             T item = default(T);
