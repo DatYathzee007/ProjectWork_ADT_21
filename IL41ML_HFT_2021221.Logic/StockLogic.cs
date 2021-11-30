@@ -55,8 +55,7 @@ namespace IL41ML_HFT_2021221.Logic
         public IList<Model> ListModelsByBrand(string brand)
         {
             return this.modelRepo.GetAll()
-                .Where(x => x.BrandId
-                .Equals(this.brandRepo.GetAll().Single(x => x.Name == brand).Id))
+                .Where(x => x.BrandId == this.brandRepo.GetAll().Single(x => x.Name.Equals(brand)).Id)
                 .ToList();
         }
         public Model MostExpensiveModel()

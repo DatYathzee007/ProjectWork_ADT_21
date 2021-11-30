@@ -20,6 +20,59 @@ namespace IL41ML_HFT_2021221.Logic
             this.shoprepo = shoprepo;
             this.servicerepo = servicerepo;
         }
+        public bool IsExisting(string name, string table)
+        {
+            switch (table)
+            {
+                case "brand":
+                    var list = this.brandrepo.GetAll().Select(x => x.Name).ToList();
+                    foreach (var item in list)
+                    {
+                        if (item.ToLower() == name.ToLower())
+                        {
+                            return true;
+                        }
+                    }
+
+                    break;
+                case "model":
+                    var list2 = this.modelrepo.GetAll().Select(x => x.Name).ToList();
+                    foreach (var item in list2)
+                    {
+                        if (item.ToLower() == name.ToLower())
+                        {
+                            return true;
+                        }
+                    }
+
+                    break;
+                case "service":
+                    var list3 = this.servicerepo.GetAll().Select(x => x.ServiceName).ToList();
+                    foreach (var item in list3)
+                    {
+                        if (item.ToLower() == name.ToLower())
+                        {
+                            return true;
+                        }
+                    }
+
+                    break;
+                case "shop":
+                    var list4 = this.shoprepo.GetAll().Select(x => x.Name).ToList();
+                    foreach (var item in list4)
+                    {
+                        if (item.ToLower() == name.ToLower())
+                        {
+                            return true;
+                        }
+                    }
+
+                    break;
+                default:
+                    return false;
+            }
+            return false;
+        }
         public bool IsExisting(int id, string table)
         {
             switch (table)
