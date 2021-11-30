@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace IL41ML_HFT_2021221.Client
 {
-    public class HelperMethods
+    public static class HelperMethods
     {
-        public static void OneItemToConsole<T>(T input, string info)
+        public static void OneItemToConsole<T>(this T input, string info)
         {
             if (input != null)
             {
@@ -26,7 +26,7 @@ namespace IL41ML_HFT_2021221.Client
                 throw new ArgumentNullException(nameof(input));
             }
         }
-        public static void MessageNotExisting<T>(T input, string table)
+        public static void MessageNotExisting<T>(this T input, string table)
         {
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("Entity is not Existing in table: {0} with {1}: {2} \n(Press a key)", table, nameof(input), input.ToString());
