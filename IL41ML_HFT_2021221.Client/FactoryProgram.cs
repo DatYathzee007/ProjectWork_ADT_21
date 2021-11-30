@@ -46,12 +46,12 @@ namespace IL41ML_HFT_2021221.Client
 
             return fp;
         }
-        private static void OneItemToConsole<T>(T input)
+        private static void OneItemToConsole<T>(T input, string info)
         {
             if (input != null)
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine("\n\tBEGIN: ");
+                Console.WriteLine("\n\tBEGIN: "+ info);
                 Console.ResetColor();
                 Console.WriteLine(input.ToString());
                 Console.ForegroundColor = ConsoleColor.DarkGray;
@@ -64,11 +64,12 @@ namespace IL41ML_HFT_2021221.Client
                 throw new ArgumentNullException(nameof(input));
             }
         }
-        private static void MessageNotExisting(int id, string table)
+        private static void MessageNotExisting<T>(T input, string table)
         {
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("Entity is not Existing in table: {0} with ID: {1}", table, id);
+            Console.WriteLine("Entity is not Existing in table: {0} with {1}: {2} \n(Press a key)", table, nameof(input), input.ToString());
             Console.ResetColor();
+            Console.ReadKey();
         }
 
         // StockLogic methods
@@ -91,9 +92,9 @@ namespace IL41ML_HFT_2021221.Client
                 if (int.TryParse(Console.ReadLine(), out int id))
                 {
 
-                    if (true/*this.rserv.GetSingle<bool>($"existing/IsExisting/table=brand&id={id}")/*this.exist.IsExisting(id, "brand")*/)
+                    if (this.rserv.GetSingle<bool>($"existing/IsExisting?table=brand&id={id}"))
                     {
-                        OneItemToConsole(this.rserv.Get<Brand>(id, "stock/ListBrandByID"));
+                        OneItemToConsole(this.rserv.Get<Brand>(id, "stock/ListBrandByID"), $"Brand with ID: {id}");
                         succes = false;
                     }
                     else
@@ -118,10 +119,9 @@ namespace IL41ML_HFT_2021221.Client
                 succes = int.TryParse(Console.ReadLine(), out id);
                 if (succes)
                 {
-                    if (this.rserv.GetSingle<bool>("existing/IsExisting"))
+                    if (this.rserv.GetSingle<bool>($"existing/IsExisting?table=model&id={id}"))
                     {
-                        Console.WriteLine(this.rserv.Get<Model>(id, "stock/ListModelByID"));
-                        Console.ReadKey();
+                        OneItemToConsole(this.rserv.Get<Model>(id, "stock/ListModelByID"), $"Model with ID: {id}");
                         succes = false;
                     }
                     else
@@ -146,7 +146,7 @@ namespace IL41ML_HFT_2021221.Client
             succes = int.TryParse(Console.ReadLine(), out brandid);
             if (succes)
             {
-                if (this.rserv.GetSingle<bool>("existing/IsExisting"))
+                if (this.rserv.GetSingle<bool>($"existing/IsExisting?table=brand&id={brandid}"))
                 {
                     Console.WriteLine("Enter name: ");
                     name = Console.ReadLine();
@@ -190,23 +190,19 @@ namespace IL41ML_HFT_2021221.Client
             }
         }
 
-        public void ListModelsByBrand2() //?
+        public void ListModelsByBrand2()
         {
-            Console.WriteLine("Enter brand id: ");
-            int id = int.Parse(Console.ReadLine());
-            foreach (var item in this.rserv.Get<Brand>("stock/ListBrands"))
+            Console.WriteLine("Enter Brand name: ");
+            string name = Console.ReadLine();
+            if (this.rserv.GetSingle<bool>($"existing/IsExistingString?name={name}&table=brand"))
             {
-                if (item.Id == id)
-                {
-                    this.rserv.Get<Model>(id, "stock/ListModelsByBrand");
-                }
-                else { MessageNotExisting(id, "Brand"); }
-            }
+                this.rserv.Get<Model>($"stock/ListModelsByBrand?brand={name}").ToConsole($"Listing models by brand: {name}");
+            } else { MessageNotExisting(name, "Brand"); }
         }
 
         public void ListBrandAverages()
         {
-            this.rserv.Get<Brand>("stock/stock/ListBrandAverages").ToConsole("Listing Brand Averages: ");
+            this.rserv.Get<NameAndDouble>("stock/ListBrandAverages").ToConsole("Listing Brand Averages: ");
         }
         /*
         public void ListBrandAveragesAsync()
@@ -216,8 +212,7 @@ namespace IL41ML_HFT_2021221.Client
         */
         public void ListMostExpensiveBrand()
         {
-            Console.WriteLine(this.rserv.GetSingle<NameAndDouble>("stock/ListMostExpensiveBrand").ToString() + " -- Most expensive Brand by Average.\n Press Key...");
-            Console.ReadKey();
+            OneItemToConsole(this.rserv.GetSingle<NameAndDouble>("stock/ListMostExpensiveBrand"), $"Most expensive brand by average: ");
         }
         /*
         public void ListMostExpensiveBrandAsync()
@@ -228,8 +223,7 @@ namespace IL41ML_HFT_2021221.Client
         */
         public void ListLeastExpensiveBrand()
         {
-            Console.WriteLine(this.rserv.GetSingle<NameAndDouble>("stock/ListLeastExpensiveBrand").ToString() + " -- Least expensive Brand by Average.\n Press Key...");
-            Console.ReadKey();
+            OneItemToConsole(this.rserv.GetSingle<NameAndDouble>("stock/ListLeastExpensiveBrand"), $"Least expensive brand by average: ");
         }
         /*
         public void ListLeastExpensiveBrandAsync()
@@ -240,20 +234,17 @@ namespace IL41ML_HFT_2021221.Client
         */
         public void MostExpensiveModel()
         {
-            Console.WriteLine(this.rserv.GetSingle<Model>("stock/MostExpensiveModel").ToString() + " -- Highest price Model.\n Press Key...");
-            Console.ReadKey();
+            OneItemToConsole(this.rserv.GetSingle<Model>("stock/MostExpensiveModel"), $"Most expensive model: ");
         }
 
         public void AveragePriceOfModels()
         {
-            Console.WriteLine(this.rserv.GetSingle<double>("stock/AveragePriceOfModels") + "HUF -- Average Model price.\n Press Key...");
-            Console.ReadKey();
+            OneItemToConsole(this.rserv.GetSingle<double>("stock/AveragePriceOfModels"), $"Average price of models in HUF:");
         }
 
         public void ListCheapestModel()
         {
-            Console.WriteLine(this.rserv.GetSingle<Model>("stock/ListCheapestModel").ToString() + " -- Cheapest price Model.\n Press Key...");
-            Console.ReadKey();
+            OneItemToConsole(this.rserv.GetSingle<Model>("stock/ListCheapestModel"), $"Least expensive model:");
         }
 
         public void ListModelAverages()
@@ -267,5 +258,7 @@ namespace IL41ML_HFT_2021221.Client
         }
         */
         // End of StockLogic methods
+
+
     }
 }

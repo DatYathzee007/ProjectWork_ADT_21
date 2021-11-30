@@ -24,7 +24,7 @@ namespace IL41ML_HFT_2021221.Client
             FactoryProgram fp = FactoryProgram.Init();
             //RestService rserv = new RestService("http://localhost:20347"); // from launchSettings.json
             Console.WriteLine("\nEndpoint started.");
-            Thread.Sleep(3000);
+            Thread.Sleep(500);
             Console.Clear();
 
             var submenu1 = new ConsoleMenu(args, 1)
