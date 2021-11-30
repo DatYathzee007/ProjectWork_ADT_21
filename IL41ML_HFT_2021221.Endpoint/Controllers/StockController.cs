@@ -16,6 +16,7 @@ namespace IL41ML_HFT_2021221.Endpoint.Controllers
     [ApiController]
     public class StockController : ControllerBase
     {
+
         IStockLogic stockLogic;
         public StockController(IStockLogic stockLogic)
         {
@@ -101,7 +102,7 @@ namespace IL41ML_HFT_2021221.Endpoint.Controllers
             return stockLogic.ListModels();
         }
 
-        [HttpGet("[action]/{id}")] // GET: stock/ListModelsByBrand/"brand"
+        [HttpGet("[action]")] // GET: stock/ListModelsByBrand?brand={name}
         public IList<Model> ListModelsByBrand(string brand)
         {
             return stockLogic.ListModelsByBrand(brand);

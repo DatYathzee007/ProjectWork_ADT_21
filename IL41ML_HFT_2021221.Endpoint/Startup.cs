@@ -29,6 +29,7 @@ namespace IL41ML_HFT_2021221.Endpoint
         {
             services.AddControllers(); // enable controllers
             //ioc
+            services.AddTransient<IExistingData, ExistingData>();
             services.AddTransient<IStockLogic, StockLogic>();
             services.AddTransient<IManagerLogic, ManagerLogic>();
             services.AddTransient<ICustomerLogic, CustomerLogic>();
