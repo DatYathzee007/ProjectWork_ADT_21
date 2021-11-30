@@ -5,6 +5,7 @@ using IL41ML_HFT_2021221.Models;
 using IL41ML_HFT_2021221.Repository;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,7 +31,7 @@ namespace IL41ML_HFT_2021221.Client
             return fp;
         }
 
-        // StockLogic methods
+        #region StockLogic methods
         public void ListBrands()
         {
             this.rserv.Get<Brand>("stock/ListBrands").ToConsole("Listing Brands: ");
@@ -155,7 +156,8 @@ namespace IL41ML_HFT_2021221.Client
             if (this.rserv.GetSingle<bool>($"existing/IsExistingString?name={name}&table=brand"))
             {
                 this.rserv.Get<Model>($"stock/ListModelsByBrand?brand={name}").ToConsole($"Listing models by brand: {name}");
-            } else { HelperMethods.MessageNotExisting(name, "Brand"); }
+            }
+            else { HelperMethods.MessageNotExisting(name, "Brand"); }
         }
 
         public void ListBrandAverages()
@@ -215,7 +217,440 @@ namespace IL41ML_HFT_2021221.Client
             this.rserv.Get<Model>("stock/GetModelAverageAsync").ToConsole("Listing the Model Averages: ");
         }
         */
-        // End of StockLogic methods
+        #endregion
+
+        #region ManagerLogic methods
+
+        public void InsertBrand()
+        {
+            string name, country, ceo, source;
+            DateTime foundation;
+            Console.WriteLine("Enter Brand name:");
+            name = Console.ReadLine();
+            Console.WriteLine("Enter Country:");
+            country = Console.ReadLine();
+            Console.WriteLine("Enter CEO of Brand:");
+            ceo = Console.ReadLine();
+            Console.WriteLine("Enter source localation of Brand:");
+            source = Console.ReadLine();
+            Console.WriteLine("Enter foundation date in a format YYYY-MM-DD :");
+            foundation = DateTime.ParseExact(Console.ReadLine(), "yyyy-MM-dd", CultureInfo.InvariantCulture);
+            this.rserv.Post<Brand>(new Brand() { Name = name, Country = country, CEO = ceo, Source = source, Foundation = foundation}, "manager/insertBrand");
+            //this.mlgc.InsertBrand(name, country, ceo, source, foundation);
+            Console.WriteLine("Insertion Done! Press a key...");
+            Console.ReadKey();
+        }
+
+        public void InsertShop()
+        {
+            int brandid, serviceid;
+            string name, country, city, phone, address;
+            bool succes = true;
+            while (succes)
+            {
+                Console.WriteLine("Enter BrandID:");
+                succes = int.TryParse(Console.ReadLine(), out brandid);
+                if (succes)
+                {
+                    succes = this.rserv.GetSingle<bool>($"existing/IsExisting?table=brand&id={brandid}");
+                    if (succes)
+                    {
+                        Console.WriteLine("Enter ServiceID:");
+                        succes = int.TryParse(Console.ReadLine(), out serviceid);
+                        if (succes)
+                        {
+                            succes = this.rserv.GetSingle<bool>($"existing/IsExisting?table=service&id={serviceid}");
+                            if (succes)
+                            {
+                                Console.WriteLine("Enter name: ");
+                                name = Console.ReadLine();
+                                Console.WriteLine("Enter country: ");
+                                country = Console.ReadLine();
+                                Console.WriteLine("Enter city: ");
+                                city = Console.ReadLine();
+                                Console.WriteLine("Enter phone number: ");
+                                phone = Console.ReadLine();
+                                Console.WriteLine("Enter address: ");
+                                address = Console.ReadLine();
+                                this.rserv.Post<Shop>(new Shop() { BrandId = brandid, ServiceId = serviceid, Name = name, Country = country, City = city, Phone = phone, Address = address }, "manager/insertShop");
+                                Console.WriteLine("Insertion Done! Press a key...");
+                                Console.ReadKey();
+                                succes = false;
+                            }
+                            else
+                            {
+                                HelperMethods.MessageNotExisting(serviceid, "Service");
+                                Console.ReadKey();
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("!!!Input must be integer!!! Press a key...");
+                            Console.ReadKey();
+                        }
+                    }
+                    else
+                    {
+                        HelperMethods.MessageNotExisting(brandid, "Brand");
+                        Console.ReadKey();
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("!!!Input must be integer!!! Press a key...");
+                    Console.ReadKey();
+                }
+            }
+        }
+
+        public void InsertService()
+        {
+            int brandid;
+            string name, country, city, address, web, phone;
+            bool succes = true;
+            while (succes)
+            {
+                Console.WriteLine("Enter BrandID:");
+                succes = int.TryParse(Console.ReadLine(), out brandid);
+                if (succes)
+                {
+                    succes = this.rserv.GetSingle<bool>($"existing/IsExisting?table=brand&id={brandid}");
+                    if (succes)
+                    {
+                        Console.WriteLine("Enter name: ");
+                        name = Console.ReadLine();
+                        Console.WriteLine("Enter country: ");
+                        country = Console.ReadLine();
+                        Console.WriteLine("Enter city: ");
+                        city = Console.ReadLine();
+                        Console.WriteLine("Enter address: ");
+                        address = Console.ReadLine();
+                        Console.WriteLine("Enter WebAddres (URL)");
+                        web = Console.ReadLine();
+                        Console.WriteLine("Enter phone number: ");
+                        phone = Console.ReadLine();
+                        this.rserv.Post<Service>(new Service() { BrandId = brandid, ServiceName = name, Country = country, City = city, PhoneNr = phone, Address = address, WebPage = web }, "manager/insertService");
+                        Console.WriteLine("Insertion Done! Press a key...");
+                        Console.ReadKey();
+                        succes = false;
+                    }
+                    else
+                    {
+                        HelperMethods.MessageNotExisting(brandid, "Brand");
+                        Console.ReadKey();
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("!!!Input must be integer!!! Press a key...");
+                    Console.ReadKey();
+                }
+            }
+        }
+        public void ChangeBrandCEO()
+        {
+            int id;
+            string name;
+            bool succes;
+            Console.WriteLine("Enter ID of Brand:");
+            succes = int.TryParse(Console.ReadLine(), out id);
+            if (succes)
+            {
+                if (this.rserv.GetSingle<bool>($"existing/IsExisting?table=brand&id={id}"))
+                {
+                    Console.WriteLine("Enter name of New CEO:");
+                    name = Console.ReadLine();
+                    this.rserv.Put(new Brand {Id = id, CEO = name },$"manager/ChangeBrandCEO");
+                    Console.WriteLine("Change Done! Press a key...");
+                    Console.ReadKey();
+                }
+                else
+                {
+                    //id.MessageNotExisting("brand");
+                    HelperMethods.MessageNotExisting(id, "Brand");
+                    Console.ReadKey();
+                }
+            }
+            else
+            {
+                Console.WriteLine("!!!Input must be integer!!! Press a key...");
+                Console.ReadKey();
+            }
+        }
+
+        /// <summary>
+        /// Implementation of <see cref="ManagerLogic.ChangeModelPrice(int, int)"/> method in <see cref="FactoryProgram"/>
+        /// with addition Console input parameters and wrong input handling and calling <see cref="Existingdata.IsExisting(int, string)"/> method.
+        /// </summary>
+        public void ChangeModelPrice()
+        {
+            int id, price;
+            bool succes;
+            Console.WriteLine("Enter ID of Model:");
+            succes = int.TryParse(Console.ReadLine(), out id);
+            if (succes)
+            {
+                if (this.rserv.GetSingle<bool>($"existing/IsExisting?table=model&id={id}"))
+                {
+                    Console.WriteLine("Enter new price:");
+                    succes = int.TryParse(Console.ReadLine(), out price);
+                    if (succes)
+                    {
+                        this.rserv.Put(new Model {Id = id, Price = price },$"manager/ChangeModelPrice");
+                        //this.mlgc.ChangeModelPrice(id, price);
+                        Console.WriteLine("Change Done! Press a key...");
+                        Console.ReadKey();
+                    }
+                    else
+                    {
+                        Console.WriteLine("!!!Input must be integer!!! Press a key...");
+                        Console.ReadKey();
+                    }
+                }
+                else
+                {
+                    HelperMethods.MessageNotExisting(id, "Model");
+                    Console.ReadKey();
+                }
+            }
+            else
+            {
+                Console.WriteLine("!!!Input must be integer!!! Press a key...");
+                Console.ReadKey();
+            }
+        }
+
+        /// <summary>
+        /// Implementation of <see cref="ManagerLogic.ChangeServiceWeb(int, string)"/> method in <see cref="FactoryProgram"/>
+        /// with addition Console input parameters and wrong input handling and calling <see cref="Existingdata.IsExisting(int, string)"/> method.
+        /// </summary>
+        public void ChangeServiceWeb()
+        {
+            int id;
+            string web;
+            bool succes;
+            Console.WriteLine("Enter ID of Service:");
+            succes = int.TryParse(Console.ReadLine(), out id);
+            if (succes)
+            {
+                if (this.rserv.GetSingle<bool>($"existing/IsExisting?table=service&id={id}"))
+                {
+                    Console.WriteLine("Enter new URL:");
+                    web = Console.ReadLine();
+                    this.rserv.Put(new Service { Id = id, WebPage = web }, $"manager/ChangeServiceWeb");
+                    //this.mlgc.ChangeServiceWeb(id, web);
+                    Console.WriteLine("Change Done! Press a key...");
+                    Console.ReadKey();
+                }
+                else
+                {
+                    
+                    HelperMethods.MessageNotExisting(id, "Service");
+                    Console.ReadKey();
+                }
+            }
+            else
+            {
+                Console.WriteLine("!!!Input must be integer!!! Press a key...");
+                Console.ReadKey();
+            }
+        }
+
+        /// <summary>
+        /// Implementation of <see cref="ManagerLogic.ChangeServiceName(int, string)"/> method in <see cref="FactoryProgram"/>
+        /// with addition Console input parameters and wrong input handling and calling <see cref="Existingdata.IsExisting(int, string)"/> method.
+        /// </summary>
+        public void ChangeServiceName()
+        {
+            int id;
+            string name;
+            bool succes;
+            Console.WriteLine("Enter ID of Service:");
+            succes = int.TryParse(Console.ReadLine(), out id);
+            if (succes)
+            {
+                if (this.rserv.GetSingle<bool>($"existing/IsExisting?table=service&id={id}"))
+                {
+                    Console.WriteLine("Enter new name:");
+                    name = Console.ReadLine();
+                    this.rserv.Put(new Service { Id = id, ServiceName = name }, $"manager/ChangeServiceName");
+                    //this.mlgc.ChangeServiceName(id, name);
+                    Console.WriteLine("Change Done! Press a key...");
+                    Console.ReadKey();
+                }
+                else
+                {
+                    HelperMethods.MessageNotExisting(id, "Service");
+                    Console.ReadKey();
+                }
+            }
+            else
+            {
+                Console.WriteLine("!!!Input must be integer!!! Press a key...");
+                Console.ReadKey();
+            }
+        }
+
+        /// <summary>
+        /// Implementation of <see cref="ManagerLogic.ChangeServicePhone(int, string)"/> method in <see cref="FactoryProgram"/>
+        /// with addition Console input parameters and wrong input handling and calling <see cref="Existingdata.IsExisting(int, string)"/> method.
+        /// </summary>
+        public void ChangeServicePhone()
+        {
+            int id;
+            string phone;
+            bool succes;
+            Console.WriteLine("Enter ID of Service:");
+            succes = int.TryParse(Console.ReadLine(), out id);
+            if (succes)
+            {
+                if (this.rserv.GetSingle<bool>($"existing/IsExisting?table=service&id={id}"))
+                {
+                    Console.WriteLine("Enter new phone number:");
+                    phone = Console.ReadLine();
+                    this.rserv.Put(new Service { Id = id, PhoneNr = phone }, $"manager/ChangeServicePhone");
+                    //this.mlgc.ChangeServicePhone(id, phone);
+                    Console.WriteLine("Change Done! Press a key...");
+                    Console.ReadKey();
+                }
+                else
+                {
+                    HelperMethods.MessageNotExisting(id, "Service");
+                    Console.ReadKey();
+                }
+            }
+            else
+            {
+                Console.WriteLine("!!!Input must be integer!!! Press a key...");
+                Console.ReadKey();
+            }
+        }
+
+        /// <summary>
+        /// Implementation of <see cref="ManagerLogic.ChangeShopName(int, string)"/> method in <see cref="FactoryProgram"/>
+        /// with addition Console input parameters and wrong input handling and calling <see cref="Existingdata.IsExisting(int, string)"/> method.
+        /// </summary>
+        public void ChangeShopName()
+        {
+            int id;
+            string name;
+            bool succes;
+            Console.WriteLine("Enter ID of Shop:");
+            succes = int.TryParse(Console.ReadLine(), out id);
+            if (succes)
+            {
+                if (this.rserv.GetSingle<bool>($"existing/IsExisting?table=shop&id={id}"))
+                {
+                    Console.WriteLine("Enter new name:");
+                    name = Console.ReadLine();
+                    this.rserv.Put(new Shop { Id = id, Name= name }, $"manager/ChangeShopName");
+                    //this.mlgc.ChangeShopName(id, name);
+                    Console.WriteLine("Change Done! Press a key...");
+                    Console.ReadKey();
+                }
+                else
+                {
+                    HelperMethods.MessageNotExisting(id, "Shop");
+                    Console.ReadKey();
+                }
+            }
+            else
+            {
+                Console.WriteLine("!!!Input must be integer!!! Press a key...");
+                Console.ReadKey();
+            }
+        }
+
+        /// <summary>
+        /// Implementation of <see cref="ManagerLogic.ChangeShopPhone(int, string)"/> method in <see cref="FactoryProgram"/>
+        /// with addition Console input parameters and wrong input handling and calling <see cref="Existingdata.IsExisting(int, string)"/> method.
+        /// </summary>
+        public void ChangeShopPhone()
+        {
+            int id;
+            string phone;
+            bool succes;
+            Console.WriteLine("Enter ID of Shop:");
+            succes = int.TryParse(Console.ReadLine(), out id);
+            if (succes)
+            {
+                if (this.rserv.GetSingle<bool>($"existing/IsExisting?table=service&id={id}"))
+                {
+                    Console.WriteLine("Enter new phone number:");
+                    phone = Console.ReadLine();
+                    this.rserv.Put(new Shop { Id = id, Phone = phone }, $"manager/ChangeShopPhone");
+                    //this.mlgc.ChangeShopName(id, phone);
+                    Console.WriteLine("Change Done! Press a key...");
+                    Console.ReadKey();
+                }
+                else
+                {
+                    HelperMethods.MessageNotExisting(id, "Shop");
+                    Console.ReadKey();
+                }
+            }
+            else
+            {
+                Console.WriteLine("!!!Input must be integer!!! Press a key...");
+                Console.ReadKey();
+            }
+        }
+
+        /// <summary>
+        /// Implementation of <see cref="ManagerLogic.RemoveEntity(string, int)"/> method in <see cref="FactoryProgram"/>
+        /// with addition Console input parameters and wrong input handling and calling <see cref="Existingdata.IsExisting(int, string)"/> method.
+        /// </summary>
+        public void RemoveEntityFP()
+        {
+            Console.WriteLine("Select table: Brand = 1 , Model = 2, Shop = 3, Service = 4");
+            string tableDecider;
+            tableDecider = Console.ReadLine();
+            int id;
+            bool succes;
+            string entityName = "brand";
+            switch (tableDecider)
+            {
+                case "1":
+                    entityName = "brand";
+                    break;
+                case "2":
+                    entityName = "model";
+                    break;
+                case "3":
+                    entityName = "shop";
+                    break;
+                case "4":
+                    entityName = "service";
+                    break;
+                default:
+                    throw new ArgumentException("Not valid tableDecider int.");
+            }
+
+            Console.WriteLine("Enter ID of " + entityName + " to be Removed: ");
+            succes = int.TryParse(Console.ReadLine(), out id);
+            if (succes)
+            {
+                if (this.rserv.GetSingle<bool>($"existing/IsExisting?table={entityName}&id={id}"))
+                {
+                    this.rserv.Delete(id,$"manager/{entityName}");
+                    //this.mlgc.RemoveEntity(entityName, id);
+                    Console.WriteLine("Remove Done! Press a key...");
+                    Console.ReadKey();
+                }
+                else
+                {
+                    HelperMethods.MessageNotExisting(id, entityName);
+                    Console.ReadKey();
+                }
+            }
+            else
+            {
+                Console.WriteLine("!!!Input must be integer!!! Press a key...");
+                Console.ReadKey();
+            }
+        }
+
+        #endregion
 
 
     }
