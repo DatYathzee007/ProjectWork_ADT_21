@@ -624,6 +624,12 @@ namespace IL41ML_HFT_2021221.Client
 
         #endregion
 
+        #region Customerlogic methods
+
+
+
+        #endregion
+
 
     }
 }
