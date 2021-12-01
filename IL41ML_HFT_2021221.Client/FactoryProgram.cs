@@ -625,8 +625,208 @@ namespace IL41ML_HFT_2021221.Client
         #endregion
 
         #region Customerlogic methods
+        public void ListAllEntityByBrand()
+        {
+            Console.WriteLine("Enter Brand name: ");
+            string name = Console.ReadLine();
+            if (this.rserv.GetSingle<bool>($"existing/IsExistingString?name={name}&table=brand"))
+            {
+                this.rserv.Get<string>($"customer/ListAllEntityByBrand?brand={name}").ToConsole($"Listing Entities by brand: {name}");
+            }
+            else { HelperMethods.MessageNotExisting(name, "Brand"); }
+        }
+        public void ListModelByID()
+        {
+            bool succes = true;
+            while (succes)
+            {
+                Console.WriteLine("Input ID for Model:");
+                int id;
+                succes = int.TryParse(Console.ReadLine(), out id);
+                if (succes)
+                {
+                    if (this.rserv.GetSingle<bool>($"existing/IsExisting?id={id}&table=model"))
+                    {
+                        HelperMethods.OneItemToConsole(this.rserv.Get<Model>(id, "customer/ListModelByID"), $"Model with ID: {id}");
+                        succes = false;
+                    }
+                    else
+                    {
+                        HelperMethods.MessageNotExisting(id, "Model");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("!!!Input must be integer!!!");
+                    Console.ReadKey();
+                }
+            }
+        }
+        public void ListModels()
+        {
+            this.rserv.Get<Model>("customer/ListModels").ToConsole("Listing Models: ");
+        }
+        public void ListModelsByBrand()
+        {
+            Console.WriteLine("Enter Brand name: ");
+            string name = Console.ReadLine();
+            if (this.rserv.GetSingle<bool>($"existing/IsExistingString?name={name}&table=brand"))
+            {
+                this.rserv.Get<Model>($"customer/ListModelsByBrand?brand={name}").ToConsole($"Listing models by brand: {name}");
+            }
+            else { HelperMethods.MessageNotExisting(name, "Brand"); }
+        }
+        public void ListModelsByPriceRange()
+        {
+            bool succes;
+            int lowerBound, upperBound;
+            Console.WriteLine("Enter LowerBound:");
+            succes = int.TryParse(Console.ReadLine(), out lowerBound);
+            if (succes)
+            {
+                Console.WriteLine("Enter UpperBound: ");
+                succes = int.TryParse(Console.ReadLine(), out upperBound);
+                if (succes)
+                {
+                    this.rserv.Get<string>($"customer/ListModelsByPriceRange?lb={lowerBound}&ub={upperBound}").ToConsole($"Listing Models between {lowerBound} HUF and {upperBound} HUF: ");
+                }
+                else
+                {
+                    Console.WriteLine("!!!Input must be integer!!!");
+                    Console.ReadKey();
+                }
+            }
+            else
+            {
+                Console.WriteLine("!!!Input must be integer!!!");
+                Console.ReadKey();
+            }
+        }
+        public void ListServiceByBrand()
+        {
+            Console.WriteLine("Enter Brand name: ");
+            string name = Console.ReadLine();
+            if (this.rserv.GetSingle<bool>($"existing/IsExistingString?name={name}&table=brand"))
+            {
+                this.rserv.Get<Service>($"customer/ListServiceByBrand?brand={name}").ToConsole($"Listing services by brand: {name}");
+            }
+            else { HelperMethods.MessageNotExisting(name, "Brand"); }
+        }
+        public void ListServiceByID()
+        {
+            bool succes = true;
+            while (succes)
+            {
+                Console.WriteLine("Input ID for Service:");
+                int id;
+                succes = int.TryParse(Console.ReadLine(), out id);
+                if (succes)
+                {
+                    if (this.rserv.GetSingle<bool>($"existing/IsExisting?table=service&id={id}"))
+                    {
+                        HelperMethods.OneItemToConsole(this.rserv.Get<Service>(id, "customer/ListServiceByID"), $"Model with ID: {id}");
+                        succes = false;
+                    }
+                    else
+                    {
+                        HelperMethods.MessageNotExisting(id, "Service");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("!!!Input must be integer!!!");
+                    Console.ReadKey();
+                }
+            }
+        }
+        public void ListServices()
+        {
+            this.rserv.Get<Service>("customer/ListServices").ToConsole("Listing Services: ");
+        }
+        public void ListShopByID()
+        {
+            bool succes = true;
+            while (succes)
+            {
+                Console.WriteLine("Input ID for Shop:");
+                int id;
+                succes = int.TryParse(Console.ReadLine(), out id);
+                if (succes)
+                {
+                    if (this.rserv.GetSingle<bool>($"existing/IsExisting?id={id}&table=shop"))
+                    {
+                        HelperMethods.OneItemToConsole(this.rserv.Get<Shop>(id, "customer/ListShopByID"), $"Shop with ID: {id}");
+                        Console.ReadKey();
+                        succes = false;
+                    }
+                    else
+                    {
+                        HelperMethods.MessageNotExisting(id, "Shop");
+                        Console.ReadKey();
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("!!!Input must be integer!!!");
+                }
+            }
+        }
+        public void ListShops()
+        {
+            this.rserv.Get<Shop>("customer/ListShops").ToConsole("Listing Shops: ");
+
+        }
+        public void ListShopsAndServicesBySpecificModel()
+        {
+            this.rserv.Get<Model>("customer/ListModels").ToConsole("Listing Models: ");
+            Console.WriteLine("Enter ID of Model: ");
+            if (int.TryParse(Console.ReadLine(), out int id))
+            {
+                if (this.rserv.GetSingle<bool>($"existing/IsExisting?id={id}&table=model"))
+                {
+                    this.rserv.Get<string>($"customer/ListShopsAndServicesBySpecificModel/{id}").ToConsole("Listing Shops and Services:");
+                }
+                else
+                {
+                    HelperMethods.MessageNotExisting(id, "Model");
+                    Console.ReadKey();
+                }
+            }
+            else
+            {
+                Console.WriteLine("!!!Input must be integer!!! Press a key...");
+                Console.ReadKey();
+            }
+        }
+        public void ListShopsByBrand()
+        {
+            Console.WriteLine("Enter Brand name: ");
+            string name = Console.ReadLine();
+            if (this.rserv.GetSingle<bool>($"existing/IsExistingString?name={name}&table=brand"))
+            {
+                this.rserv.Get<Service>($"customer/ListShopsByBrand?brand={name}").ToConsole($"Listing shops by brand: {name}");
+            }
+            else { HelperMethods.MessageNotExisting(name, "Brand"); }
+        }
+        public void ListShopsAndServiceINSpecificLocByBrand()
+        {
+            Console.WriteLine("Enter Brand name: ");
+            string name = Console.ReadLine();
+            if (this.rserv.GetSingle<bool>($"existing/IsExistingString?name={name}&table=brand"))
+            {
+                string shoplocation = "Szent";
+                this.rserv.Get<string>($"customer/ListShopsAndServiceINSpecificLocByBrand?brand={name}&shoplocation={shoplocation}").ToConsole($"Listing shops and services by brand: {name} and localation: {shoplocation}");
+            }
+            else { HelperMethods.MessageNotExisting(name, "Brand"); }
 
 
+
+            //Console.WriteLine("Enter brand: ");
+            //string brand = Console.ReadLine();
+            //Console.WriteLine("Shoplocation: Szentmihályi út");
+            //string shoplocation = "Szent";
+            //this.clgc.ListShopsAndServiceINSpecificLocByBrand(brand, shoplocation).ToConsole("Shops and Services Located in " + shoplocation);
+        }
 
         #endregion
 

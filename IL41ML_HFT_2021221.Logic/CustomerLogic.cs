@@ -88,10 +88,10 @@ namespace IL41ML_HFT_2021221.Logic
                                           select $"Model: {model}";
             IEnumerable<string> result3 = from service in this.serviceRepo.GetAll()
                                           where service.BrandId == selectedBrandID
-                                          select $"Model: {service}";
+                                          select $"Service: {service}";
             IEnumerable<string> result4 = from shop in this.shopRepo.GetAll()
                                           where shop.BrandId == selectedBrandID
-                                          select $"Model: {shop}";
+                                          select $"Shop: {shop}";
             return result.Concat(result2).Concat(result3).Concat(result4);
         }
 

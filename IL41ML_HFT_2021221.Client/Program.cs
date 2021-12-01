@@ -25,7 +25,7 @@ namespace IL41ML_HFT_2021221.Client
             //RestService rserv = new RestService("http://localhost:20347"); // from launchSettings.json
             Console.WriteLine("\nEndpoint started.");
             Thread.Sleep(500);
-            Console.Clear();
+            //Console.Clear();
 
             var submenu1 = new ConsoleMenu(args, 1)
             .Add("List all Brands", fp.ListBrands)
@@ -54,7 +54,7 @@ namespace IL41ML_HFT_2021221.Client
                 config.EnableWriteTitle = true;
                 config.SelectedItemBackgroundColor = ConsoleColor.Red;
             });
-            /*
+            
             var submenu2 = new ConsoleMenu(args, 1)
                 .Add("List all entity by Brand", fp.ListAllEntityByBrand)
                 .Add("List Model by ID", fp.ListModelByID)
@@ -69,7 +69,7 @@ namespace IL41ML_HFT_2021221.Client
                 .Add("List Shops and Services accoring to a Model", fp.ListShopsAndServicesBySpecificModel)
                 .Add("List Shops by Brand", fp.ListShopsByBrand)
                 .Add("List Shops and Services by Localation and Brand", fp.ListShopsAndServiceINSpecificLocByBrand)
-                .Add("List Shops and Services by Localation and Brand (Async)", fp.ListShopsAndServiceINSpecificLocByBrandAsync)
+                //.Add("List Shops and Services by Localation and Brand (Async)", fp.ListShopsAndServiceINSpecificLocByBrandAsync)
                 .Add("Sub_Close", ConsoleMenu.Close)
                 .Configure(config =>
                 {
@@ -79,7 +79,7 @@ namespace IL41ML_HFT_2021221.Client
                     config.EnableWriteTitle = true;
                     config.SelectedItemBackgroundColor = ConsoleColor.Red;
                 });
-            */
+            
             var submenu3 = new ConsoleMenu(args, 1)
                 .Add("Insert new Brand", fp.InsertBrand)
                 .Add("Insert new Shop", fp.InsertShop)
@@ -104,7 +104,7 @@ namespace IL41ML_HFT_2021221.Client
             
             var menu = new ConsoleMenu(args, level: 0)
               .Add("Stock operations", () => submenu1.Show())
-              //.Add("Customer operations", () => submenu2.Show())
+              .Add("Customer operations", () => submenu2.Show())
               .Add("Manager operations", () => submenu3.Show())
               .Add("Close", ConsoleMenu.Close)
               .Configure(config =>
