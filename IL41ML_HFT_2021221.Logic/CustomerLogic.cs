@@ -122,8 +122,8 @@ namespace IL41ML_HFT_2021221.Logic
             return q.ToList();
         }
 
-        /*
-        public IList<string> OLDListModelsByPriceRange(int lowerBound, int upperBound)
+        
+        public IList<string> ListModelsByPriceRange(int lowerBound, int upperBound)
         {
             return this.modelRepo.GetAll()
             .Where(x => x.Price > lowerBound && x.Price < upperBound)
@@ -133,10 +133,13 @@ namespace IL41ML_HFT_2021221.Logic
             .Select(x => $"ID: {x.Id}\t Name: {x.Name}\t Size: {x.Size}  \tPrice: {x.Price} \tRatio: {x.PriceValueRatio}")
             .ToList();
         }
-        */
+        
 
-        public IList<string> ListModelsByPriceRange(int lowerBound, int upperBound)
+        public IList<string> OLDListModelsByPriceRange(int lowerBound, int upperBound)
         {
+            var q1 = this.modelRepo.GetAll().Where(x => x.Price > lowerBound && x.Price < upperBound)//.Where(x => x.Price > lowerBound && x.Price < upperBound) //without it where it works fine. 
+                    .Select(x => $"ID: {x.Id}, Name: {x.Name} {x.ModelName}, Price:{x.Price}").ToList();
+
             var q = from model in this.modelRepo.GetAll()
                     where model.Price > lowerBound && model.Price < upperBound
                     select new { model.Id, Name = model.Brand.Name + " " + model.Name + " " + model.ModelName, model.Price, model.Size, PriceValueRatio = model.Price / (model.Size == 0 ? 1 : model.Size) }
@@ -144,7 +147,7 @@ namespace IL41ML_HFT_2021221.Logic
                     orderby newList.PriceValueRatio
                     orderby newList.Price
                     select $"ID: {newList.Id}\t Name: {newList.Name}\t Size: {newList.Size}  \t Price: {newList.Price} \t Ratio: {newList.PriceValueRatio}";
-            return q.ToList();
+            return q1.ToList();
         }
 
         /*
