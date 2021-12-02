@@ -101,49 +101,23 @@ namespace IL41ML_HFT_2021221.Client
                     config.EnableWriteTitle = true;
                     config.SelectedItemBackgroundColor = ConsoleColor.Red;
                 });
+
+                var menu = new ConsoleMenu(args, level: 0)
+                  .Add("Stock operations", () => submenu1.Show())
+                  .Add("Customer operations", () => submenu2.Show())
+                  .Add("Manager operations", () => submenu3.Show())
+                  .Add("Exit", () => Environment.Exit(0))
+                  .Configure(config =>
+                  {
+                      config.Selector = "--> ";
+                      config.EnableFilter = false;
+                      config.Title = "ADT Project Work IL41ML - Main Menu";
+                      config.EnableWriteTitle = true;
+                      config.SelectedItemBackgroundColor = ConsoleColor.Red;
+                  });
+
+                menu.Show();
             
-            var menu = new ConsoleMenu(args, level: 0)
-              .Add("Stock operations", () => submenu1.Show())
-              .Add("Customer operations", () => submenu2.Show())
-              .Add("Manager operations", () => submenu3.Show())
-              .Add("Close", ConsoleMenu.Close)
-              .Configure(config =>
-              {
-                  config.Selector = "--> ";
-                  config.EnableFilter = false;
-                  config.Title = "ADT Project Work IL41ML - Main Menu";
-                  config.EnableWriteTitle = true;
-                  config.SelectedItemBackgroundColor = ConsoleColor.Red;
-              });
-
-            menu.Show();
-
-
-
-            /*var test = rserv.Get<Brand>("stock/ListBrands");
-            foreach (var item in test)
-            {
-                Console.WriteLine(item.ToString());
-            }
-            var test2 = rserv.Get<Brand>(1,"stock/ListBrandByID");
-            Console.WriteLine(test2.ToString());*/
-            //var test3 = rserv.Get<Model>("stock/ListModels");
-            //test3.ForEach(item => Console.WriteLine(item)); // LISTING MODELS
-
-            //Model testModel = new Model() { BrandId = 1, ModelName = "TESTPhone", Color = "Red", Name = "maxProGiga", Price = 9999, Size = 64 };
-            //rserv.Post<Model>(testModel, "stock"); // ADDING MODEL
-            //Console.WriteLine("-----------------------------------------------------------------------------------");
-            //rserv.Post<Model>(new Model() { BrandId = 1, Name = "KUKiPhone"}, "stock/InsertModel");
-            //rserv.Get<Model>("stock/ListModels").ForEach(item => Console.WriteLine(item)); // LISTING MODELS
-
-            //rserv.Delete(1, "manager");
-            //var test = rserv.Get<Brand>("stock/ListBrands");
-            //foreach (var item in test)
-            //{
-            //    Console.WriteLine(item.ToString());
-            //}
-
-
         }
     }
 }
