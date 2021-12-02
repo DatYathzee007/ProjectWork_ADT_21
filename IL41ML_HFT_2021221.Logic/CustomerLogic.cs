@@ -125,16 +125,18 @@ namespace IL41ML_HFT_2021221.Logic
         
         public IList<string> ListModelsByPriceRange(int lowerBound, int upperBound)
         {
-            return this.modelRepo.GetAll()
+            var q = this.modelRepo.GetAll()
             .Where(x => x.Price > lowerBound && x.Price < upperBound)
             .Select(x => new { x.Id, Name = x.Brand.Name + " " + x.Name + " " + x.ModelName, x.Price, x.Size, PriceValueRatio = x.Price / (x.Size == 0 ? 1 : x.Size) })
             .OrderBy(x => x.PriceValueRatio)
             .ThenBy(x => x.Price)
             .Select(x => $"ID: {x.Id}\t Name: {x.Name}\t Size: {x.Size}  \tPrice: {x.Price} \tRatio: {x.PriceValueRatio}")
             .ToList();
+            ((List<string>)q).Add("[Ratio is Price over StorageSize. Simply a cost of 1GB storages.]");
+            return q;
         }
         
-
+        /*
         public IList<string> OLDListModelsByPriceRange(int lowerBound, int upperBound)
         {
             var q1 = this.modelRepo.GetAll().Where(x => x.Price > lowerBound && x.Price < upperBound)//.Where(x => x.Price > lowerBound && x.Price < upperBound) //without it where it works fine. 
@@ -147,9 +149,10 @@ namespace IL41ML_HFT_2021221.Logic
                     orderby newList.PriceValueRatio
                     orderby newList.Price
                     select $"ID: {newList.Id}\t Name: {newList.Name}\t Size: {newList.Size}  \t Price: {newList.Price} \t Ratio: {newList.PriceValueRatio}";
-            return q1.ToList();
+            
+            return q.ToList();
         }
-
+        */
         /*
         public IList<Service> OLDListServiceByBrand(string brand)
         {

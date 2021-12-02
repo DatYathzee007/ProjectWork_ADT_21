@@ -41,7 +41,7 @@ namespace IL41ML_HFT_2021221.Endpoint.Controllers
         [HttpGet("[action]")] // GET: customer/ListAllEntityByBrand?brand={name}
         public IEnumerable<string> ListAllEntityByBrand(string brand) { return customerLogic.ListAllEntityByBrand(brand); }
         [HttpGet("[action]")] // GET: customer/ListModelsByPriceRange?lb={lowerbound}&ub={upperbound}
-        public IList<string> ListModelsByPriceRange(int lowerBound, int upperBound) { return customerLogic.ListModelsByPriceRange(lowerBound, upperBound); }
+        public IList<string> ListModelsByPriceRange(int lb, int ub) { return customerLogic.ListModelsByPriceRange(lb, ub); }
         [HttpGet("[action]/{id}")] // GET: customer/ListShopsAndServicesBySpecificModel/{id}
         public IEnumerable<string> ListShopsAndServicesBySpecificModel(int id) { return customerLogic.ListShopsAndServicesBySpecificModel(id); }
         [HttpGet("[action]")] // GET: customer/ListShopsAndServiceINSpecificLocByBrand?brand={name}&shoplocation={location}
