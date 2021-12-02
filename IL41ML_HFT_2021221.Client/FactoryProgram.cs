@@ -360,7 +360,7 @@ namespace IL41ML_HFT_2021221.Client
                 {
                     Console.WriteLine("Enter name of New CEO:");
                     name = Console.ReadLine();
-                    this.rserv.Put(new Brand { Id = id, CEO = name }, $"manager/ChangeBrandCEO");
+                    this.rserv.Put<Brand>(new Brand { Id = id, CEO = name }, "manager/ChangeBrandCEO");
                     Console.WriteLine("Change Done! Press a key...");
                     Console.ReadKey();
                 }
