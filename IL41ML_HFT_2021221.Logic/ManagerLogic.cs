@@ -71,7 +71,7 @@ namespace IL41ML_HFT_2021221.Logic
 
         public void InsertService(Service input)
         {
-            if (this.brandRepo.GetAll().Count() >= input.BrandId || input.BrandId >= 0 || input.ServiceName == null || input.Country == null || input.City == null || input.Address == null || input.WebPage == null || input.PhoneNr == null)
+            if (this.brandRepo.GetAll().Count() < input.BrandId || input.BrandId <= 0 || input.ServiceName == null || input.Country == null || input.City == null || input.Address == null || input.WebPage == null || input.PhoneNr == null)
             {
                 throw new ArgumentNullException(nameof(input.ServiceName));
             }
@@ -83,7 +83,7 @@ namespace IL41ML_HFT_2021221.Logic
 
         public void InsertShop(Shop input)
         {
-            if (this.brandRepo.GetAll().Count() >= input.BrandId || input.BrandId >= 0 || this.serviceRepo.GetAll().Count() >= input.ServiceId || input.ServiceId >= 0 || input.Name == null || input.Country == null || input.City == null || input.Address == null || input.Phone == null)
+            if (this.brandRepo.GetAll().Count() < input.BrandId || input.BrandId <= 0 || this.serviceRepo.GetAll().Count() < input.ServiceId || input.ServiceId <= 0 || input.Name == null || input.Country == null || input.City == null || input.Address == null || input.Phone == null)
             {
                 throw new ArgumentNullException(nameof(input.Name));
             }

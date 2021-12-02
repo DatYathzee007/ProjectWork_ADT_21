@@ -9,7 +9,6 @@ namespace IL41ML_HFT_2021221.Client
         static void Main(string[] args)
         {
             Console.Title = "Global Phone Application - IL41ML - ADT - 2021221";
-
             Console.WriteLine("Program Started.");
             Console.WriteLine("Waiting for EndPoint to start...");
             char[] load = "                    ".ToCharArray();
@@ -54,7 +53,6 @@ namespace IL41ML_HFT_2021221.Client
                 config.EnableWriteTitle = true;
                 config.SelectedItemBackgroundColor = ConsoleColor.Red;
             });
-            
             var submenu2 = new ConsoleMenu(args, 1)
                 .Add("List all entity by Brand", fp.ListAllEntityByBrand)
                 .Add("List Model by ID", fp.ListModelByID)
@@ -101,7 +99,6 @@ namespace IL41ML_HFT_2021221.Client
                     config.EnableWriteTitle = true;
                     config.SelectedItemBackgroundColor = ConsoleColor.Red;
                 });
-
                 var menu = new ConsoleMenu(args, level: 0)
                   .Add("Stock operations", () => submenu1.Show())
                   .Add("Customer operations", () => submenu2.Show())
@@ -115,9 +112,7 @@ namespace IL41ML_HFT_2021221.Client
                       config.EnableWriteTitle = true;
                       config.SelectedItemBackgroundColor = ConsoleColor.Red;
                   });
-
                 menu.Show();
-            
         }
     }
 }

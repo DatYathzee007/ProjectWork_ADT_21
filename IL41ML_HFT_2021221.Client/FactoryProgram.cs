@@ -235,7 +235,7 @@ namespace IL41ML_HFT_2021221.Client
             source = Console.ReadLine();
             Console.WriteLine("Enter foundation date in a format YYYY-MM-DD :");
             foundation = DateTime.ParseExact(Console.ReadLine(), "yyyy-MM-dd", CultureInfo.InvariantCulture);
-            this.rserv.Post<Brand>(new Brand() { Name = name, Country = country, CEO = ceo, Source = source, Foundation = foundation}, "manager/insertBrand");
+            this.rserv.Post<Brand>(new Brand() { Name = name, Country = country, CEO = ceo, Source = source, Foundation = foundation }, "manager/insertBrand");
             //this.mlgc.InsertBrand(name, country, ceo, source, foundation);
             Console.WriteLine("Insertion Done! Press a key...");
             Console.ReadKey();
@@ -360,7 +360,7 @@ namespace IL41ML_HFT_2021221.Client
                 {
                     Console.WriteLine("Enter name of New CEO:");
                     name = Console.ReadLine();
-                    this.rserv.Put(new Brand {Id = id, CEO = name },$"manager/ChangeBrandCEO");
+                    this.rserv.Put(new Brand { Id = id, CEO = name }, $"manager/ChangeBrandCEO");
                     Console.WriteLine("Change Done! Press a key...");
                     Console.ReadKey();
                 }
@@ -392,7 +392,7 @@ namespace IL41ML_HFT_2021221.Client
                     succes = int.TryParse(Console.ReadLine(), out price);
                     if (succes)
                     {
-                        this.rserv.Put(new Model {Id = id, Price = price },$"manager/ChangeModelPrice");
+                        this.rserv.Put(new Model { Id = id, Price = price }, $"manager/ChangeModelPrice");
                         //this.mlgc.ChangeModelPrice(id, price);
                         Console.WriteLine("Change Done! Press a key...");
                         Console.ReadKey();
@@ -436,7 +436,7 @@ namespace IL41ML_HFT_2021221.Client
                 }
                 else
                 {
-                    
+
                     HelperMethods.MessageNotExisting(id, "Service");
                     Console.ReadKey();
                 }
@@ -523,7 +523,7 @@ namespace IL41ML_HFT_2021221.Client
                 {
                     Console.WriteLine("Enter new name:");
                     name = Console.ReadLine();
-                    this.rserv.Put(new Shop { Id = id, Name= name }, $"manager/ChangeShopName");
+                    this.rserv.Put(new Shop { Id = id, Name = name }, $"manager/ChangeShopName");
                     //this.mlgc.ChangeShopName(id, name);
                     Console.WriteLine("Change Done! Press a key...");
                     Console.ReadKey();
@@ -604,7 +604,7 @@ namespace IL41ML_HFT_2021221.Client
             {
                 if (this.rserv.GetSingle<bool>($"existing/IsExisting?table={entityName}&id={id}"))
                 {
-                    this.rserv.Delete(id,$"manager/{entityName}");
+                    this.rserv.Delete(id, $"manager/{entityName}");
                     //this.mlgc.RemoveEntity(entityName, id);
                     Console.WriteLine("Remove Done! Press a key...");
                     Console.ReadKey();
@@ -804,28 +804,43 @@ namespace IL41ML_HFT_2021221.Client
             string name = Console.ReadLine();
             if (this.rserv.GetSingle<bool>($"existing/IsExistingString?name={name}&table=brand"))
             {
-                this.rserv.Get<Service>($"customer/ListShopsByBrand?brand={name}").ToConsole($"Listing shops by brand: {name}");
+                this.rserv.Get<Shop>($"customer/ListShopsByBrand?brand={name}").ToConsole($"Listing shops by brand: {name}");
             }
             else { HelperMethods.MessageNotExisting(name, "Brand"); }
         }
         public void ListShopsAndServiceINSpecificLocByBrand()
         {
-            Console.WriteLine("Enter Brand name: ");
-            string name = Console.ReadLine();
-            if (this.rserv.GetSingle<bool>($"existing/IsExistingString?name={name}&table=brand"))
+            string name;
+            string shoplocation;
+            ConsoleKey asd;
+            do
             {
-                string shoplocation = "Szent";
-                this.rserv.Get<string>($"customer/ListShopsAndServiceINSpecificLocByBrand?brand={name}&shoplocation={shoplocation}").ToConsole($"Listing shops and services by brand: {name} and localation: {shoplocation}");
-            }
-            else { HelperMethods.MessageNotExisting(name, "Brand"); }
+                Console.WriteLine("\nEnter Brand name (SAMSUNG): ");
+                name = Console.ReadLine();
+                if (this.rserv.GetSingle<bool>($"existing/IsExistingString?name={name}&table=brand"))
+                {
+                    Console.WriteLine("\nEnter Location (Szentmihalyi ut): ");
+                    shoplocation = Console.ReadLine();
+                    Console.WriteLine($"CONFIRM choice, Brand:{name}, Address: {shoplocation}, \nPress Y/N");
+                    asd = Console.ReadKey().Key;
+                    if (asd == ConsoleKey.Y)
+                    {
+                        this.rserv.Get<string>($"customer/ListShopsAndServiceINSpecificLocByBrand?brand={name}&shoplocation={shoplocation}").ToConsole($"Listing shops and services by brand: {name} and localation: {shoplocation}");
+                    }
+                }
+                else
+                {
+                    HelperMethods.MessageNotExisting(name, "Brand");
+                    Console.WriteLine("Start all over? Y/N");
+                    asd = Console.ReadKey().Key;
+                    if (asd == ConsoleKey.Y)
+                    {
+                        asd = ConsoleKey.N;
+                    }
+                    else asd = ConsoleKey.Y;
+                }
+            } while (asd == ConsoleKey.N);
 
-
-
-            //Console.WriteLine("Enter brand: ");
-            //string brand = Console.ReadLine();
-            //Console.WriteLine("Shoplocation: Szentmihályi út");
-            //string shoplocation = "Szent";
-            //this.clgc.ListShopsAndServiceINSpecificLocByBrand(brand, shoplocation).ToConsole("Shops and Services Located in " + shoplocation);
         }
 
         #endregion
