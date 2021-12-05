@@ -1,14 +1,7 @@
-﻿using IL41ML_HFT_2021221.Data;
-using IL41ML_HFT_2021221.Logic;
-using IL41ML_HFT_2021221.Logic.DataType;
+﻿using IL41ML_HFT_2021221.Logic.DataType;
 using IL41ML_HFT_2021221.Models;
-using IL41ML_HFT_2021221.Repository;
 using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace IL41ML_HFT_2021221.Client
 {
@@ -360,7 +353,9 @@ namespace IL41ML_HFT_2021221.Client
                 {
                     Console.WriteLine("Enter name of New CEO:");
                     name = Console.ReadLine();
-                    this.rserv.Put<Brand>(new Brand { Id = id, CEO = name }, "manager/ChangeBrandCEO");
+                    var newBrand = this.rserv.Get<Brand>(id, "stock/ListBrandByID");
+                    newBrand.CEO = name;
+                    this.rserv.Put<Brand>(newBrand, "manager/ChangeBrandCEO");
                     Console.WriteLine("Change Done! Press a key...");
                     Console.ReadKey();
                 }
@@ -392,7 +387,9 @@ namespace IL41ML_HFT_2021221.Client
                     succes = int.TryParse(Console.ReadLine(), out price);
                     if (succes)
                     {
-                        this.rserv.Put(new Model { Id = id, Price = price }, $"manager/ChangeModelPrice");
+                        var newModel = this.rserv.Get<Model>(id, "stock/ListModelByID");
+                        newModel.Price = price;
+                        this.rserv.Put(newModel, $"manager/ChangeModelPrice");
                         //this.mlgc.ChangeModelPrice(id, price);
                         Console.WriteLine("Change Done! Press a key...");
                         Console.ReadKey();
@@ -419,7 +416,6 @@ namespace IL41ML_HFT_2021221.Client
         public void ChangeServiceWeb()
         {
             int id;
-            string web;
             bool succes;
             Console.WriteLine("Enter ID of Service:");
             succes = int.TryParse(Console.ReadLine(), out id);
@@ -428,8 +424,9 @@ namespace IL41ML_HFT_2021221.Client
                 if (this.rserv.GetSingle<bool>($"existing/IsExisting?table=service&id={id}"))
                 {
                     Console.WriteLine("Enter new URL:");
-                    web = Console.ReadLine();
-                    this.rserv.Put(new Service { Id = id, WebPage = web }, $"manager/ChangeServiceWeb");
+                    var newService = this.rserv.Get<Service>(id, "customer/ListServiceByID");
+                    newService.WebPage = Console.ReadLine();
+                    this.rserv.Put(newService, $"manager/ChangeServiceWeb");
                     //this.mlgc.ChangeServiceWeb(id, web);
                     Console.WriteLine("Change Done! Press a key...");
                     Console.ReadKey();
@@ -451,7 +448,6 @@ namespace IL41ML_HFT_2021221.Client
         public void ChangeServiceName()
         {
             int id;
-            string name;
             bool succes;
             Console.WriteLine("Enter ID of Service:");
             succes = int.TryParse(Console.ReadLine(), out id);
@@ -460,8 +456,9 @@ namespace IL41ML_HFT_2021221.Client
                 if (this.rserv.GetSingle<bool>($"existing/IsExisting?table=service&id={id}"))
                 {
                     Console.WriteLine("Enter new name:");
-                    name = Console.ReadLine();
-                    this.rserv.Put(new Service { Id = id, ServiceName = name }, $"manager/ChangeServiceName");
+                    var newService = this.rserv.Get<Service>(id, "customer/ListServiceByID");
+                    newService.ServiceName = Console.ReadLine();
+                    this.rserv.Put(newService, $"manager/ChangeServiceName");
                     //this.mlgc.ChangeServiceName(id, name);
                     Console.WriteLine("Change Done! Press a key...");
                     Console.ReadKey();
@@ -482,7 +479,6 @@ namespace IL41ML_HFT_2021221.Client
         public void ChangeServicePhone()
         {
             int id;
-            string phone;
             bool succes;
             Console.WriteLine("Enter ID of Service:");
             succes = int.TryParse(Console.ReadLine(), out id);
@@ -491,8 +487,9 @@ namespace IL41ML_HFT_2021221.Client
                 if (this.rserv.GetSingle<bool>($"existing/IsExisting?table=service&id={id}"))
                 {
                     Console.WriteLine("Enter new phone number:");
-                    phone = Console.ReadLine();
-                    this.rserv.Put(new Service { Id = id, PhoneNr = phone }, $"manager/ChangeServicePhone");
+                    var newService = this.rserv.Get<Service>(id, "customer/ListServiceByID");
+                    newService.PhoneNr = Console.ReadLine();
+                    this.rserv.Put(newService, $"manager/ChangeServicePhone");
                     //this.mlgc.ChangeServicePhone(id, phone);
                     Console.WriteLine("Change Done! Press a key...");
                     Console.ReadKey();
@@ -513,7 +510,6 @@ namespace IL41ML_HFT_2021221.Client
         public void ChangeShopName()
         {
             int id;
-            string name;
             bool succes;
             Console.WriteLine("Enter ID of Shop:");
             succes = int.TryParse(Console.ReadLine(), out id);
@@ -522,8 +518,9 @@ namespace IL41ML_HFT_2021221.Client
                 if (this.rserv.GetSingle<bool>($"existing/IsExisting?table=shop&id={id}"))
                 {
                     Console.WriteLine("Enter new name:");
-                    name = Console.ReadLine();
-                    this.rserv.Put(new Shop { Id = id, Name = name }, $"manager/ChangeShopName");
+                    var newShop = this.rserv.Get<Shop>(id, "customer/ListShopByID");
+                    newShop.Name = Console.ReadLine();
+                    this.rserv.Put(newShop, $"manager/ChangeShopName");
                     //this.mlgc.ChangeShopName(id, name);
                     Console.WriteLine("Change Done! Press a key...");
                     Console.ReadKey();
@@ -544,7 +541,6 @@ namespace IL41ML_HFT_2021221.Client
         public void ChangeShopPhone()
         {
             int id;
-            string phone;
             bool succes;
             Console.WriteLine("Enter ID of Shop:");
             succes = int.TryParse(Console.ReadLine(), out id);
@@ -553,8 +549,9 @@ namespace IL41ML_HFT_2021221.Client
                 if (this.rserv.GetSingle<bool>($"existing/IsExisting?table=service&id={id}"))
                 {
                     Console.WriteLine("Enter new phone number:");
-                    phone = Console.ReadLine();
-                    this.rserv.Put(new Shop { Id = id, Phone = phone }, $"manager/ChangeShopPhone");
+                    var newShop = this.rserv.Get<Shop>(id, "customer/ListShopByID");
+                    newShop.Phone = Console.ReadLine();
+                    this.rserv.Put(newShop, $"manager/ChangeShopPhone");
                     //this.mlgc.ChangeShopName(id, phone);
                     Console.WriteLine("Change Done! Press a key...");
                     Console.ReadKey();
