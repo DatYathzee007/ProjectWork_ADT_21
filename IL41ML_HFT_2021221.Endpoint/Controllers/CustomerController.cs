@@ -1,6 +1,8 @@
-﻿using IL41ML_HFT_2021221.Logic;
+﻿using IL41ML_HFT_2021221.Endpoint.Services;
+using IL41ML_HFT_2021221.Logic;
 using IL41ML_HFT_2021221.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,12 +17,14 @@ namespace IL41ML_HFT_2021221.Endpoint.Controllers
     public class CustomerController : ControllerBase
     {
         ICustomerLogic customerLogic;
-        public CustomerController(ICustomerLogic customerLogic)
+        IHubContext<SignalRHub> hub;
+        public CustomerController(ICustomerLogic customerLogic, IHubContext<SignalRHub> hub)
         {
             this.customerLogic = customerLogic;
+            this.hub = hub;
         }
 
-        [HttpGet("[action]")] // GET: customer/ListModels
+        [HttpGet("[action]")] // GET: customer/ListModels "[action]"
         public IList<Model> ListModels() { return customerLogic.ListModels(); }
         [HttpGet("[action]")] // GET: customer/ListServices
         public IList<Service> ListServices() { return customerLogic.ListServices(); }

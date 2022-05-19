@@ -10,17 +10,16 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace IL41ML_HFT_2021221.WpfApp
+namespace IL41ML_HFT_2021221.WpfApp.Stock
 {
     /// <summary>
-    /// Interaction logic for CustomerWindow.xaml
+    /// Interaction logic for StockWindow.xaml
     /// </summary>
-    public partial class CustomerWindow : Page
+    public partial class StockWindow : Window
     {
-        public CustomerWindow()
+        public StockWindow()
         {
             InitializeComponent();
         }

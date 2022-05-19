@@ -1,19 +1,44 @@
-﻿using Microsoft.Toolkit.Mvvm.ComponentModel;
-using Microsoft.Toolkit.Mvvm.Input;
+﻿using IL41ML_HFT_2021221.Models;
+using IL41ML_HFT_2021221.WpfApp.Manager;
+using IL41ML_HFT_2021221.WpfApp.Stock;
+//using Microsoft.Toolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.ComponentModel;
+//using Microsoft.Toolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Input;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Threading;
+using System.Windows;
+using System.Windows.Input;
 
 namespace IL41ML_HFT_2021221.WpfApp
 {
-    public class MainWindowViewModel : ObservableRecipient
+    public partial class MainWindowViewModel : ObservableRecipient
     {
-        public RelayCommand ShowManager { get; set; }
-        public RelayCommand ShowStock { get; set; }
-        public RelayCommand ShowCustomer { get; set; }
+        //commands getter & setter
+        public ICommand ShowManager { get; set; }
+        public ICommand ShowStock { get; set; }
+        public ICommand ShowCustomer { get; set; }
+        
         public MainWindowViewModel()
         {
-            ShowManager = new RelayCommand(() => {
-                _ = new ManagerWindow.ShowDialog();
-                
-            });
+            Thread.Sleep(5000);
+            // COMMANDS
+            ShowCustomer = new RelayCommand(() => new CustomerWindow().ShowDialog());
+
+            ShowManager = new RelayCommand(() =>
+            {
+                ManagerWindow managerWindow = new ManagerWindow();
+                managerWindow.ShowDialog();
+            }
+            );
+
+            ShowStock = new RelayCommand(() =>
+            {
+                StockWindow stockWindow = new StockWindow();
+                stockWindow.ShowDialog();
+            }
+            );
         }
     }
 }

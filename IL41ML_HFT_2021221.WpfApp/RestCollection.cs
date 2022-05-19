@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -271,13 +272,60 @@ namespace IL41ML_HFT_2021221.WpfApp
     {
         public event NotifyCollectionChangedEventHandler? CollectionChanged;
 
+        private string endpoint;
+        private string endpoint2;
         RestService rest;
         List<T> items;
         bool hasSignalR;
         NotifyService notify;
-        private async Task Init()
+        Type type = typeof(T);
+        public RestCollection(string baseurl, string endpoint, string endpoint2 = null, string hub = null)
         {
-            items = await rest.GetAsync<T>(typeof(T).Name);
+            this.endpoint2 = endpoint2;
+            this.endpoint = endpoint;
+            hasSignalR = hub is not null;
+            this.rest = new RestService(baseurl/*, endpoint*/);
+            if (hasSignalR)
+            {
+                this.notify = new NotifyService(baseurl + hub);
+                this.notify.AddHandler<T>(type.Name + "Created", (T item) =>
+                {
+                    items.Add(item);
+                    CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+                });
+                this.notify.AddHandler<T>(type.Name + "Deleted", (T item) =>
+                {
+                    var element = items.FirstOrDefault(t => t.Equals(item));
+                    if (element != null)
+                    {
+                        items.Remove(item);
+                        CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+                    }
+                    else
+                    {
+                        Init(endpoint);
+                    }
+
+                });
+                this.notify.AddHandler<T>(type.Name + "Updated", (T item) =>
+                {
+                    Init(endpoint);
+                });
+
+                this.notify.Init();
+            }
+            Init(endpoint);
+        }
+        //private async Task Init(string endpoint = "")
+        //{
+        //    items = await rest.GetAsync<T>($"{endpoint}List{type.Name}s");
+        //    //items = await rest.GetAsync<T>(typeof(T).Name);
+        //    CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+        //}
+        private async Task Init(string endpoint = "")
+        {
+            items = await rest.GetAsync<T>($"{endpoint}{endpoint2}");
+            //items = await rest.GetAsync<T>(typeof(T).Name);
             CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
         }
 
@@ -298,7 +346,6 @@ namespace IL41ML_HFT_2021221.WpfApp
             }
             else return new List<T>().GetEnumerator();
         }
-
         public void Add(T item)
         {
             if (hasSignalR)
@@ -362,6 +409,24 @@ namespace IL41ML_HFT_2021221.WpfApp
                 });
             }
 
+        }
+
+        public IList<T> Filter(string NewEndpoint)
+        {
+            var taszk = rest.Get<T>($"{endpoint}{NewEndpoint}");
+            return taszk;
+            //items = await rest.GetAsync<T>(typeof(T).Name);
+        }
+        public IEnumerable<T> FilterEnum(string NewEndpoint)
+        {
+            var result = rest.Get<T>($"{endpoint}{NewEndpoint}");
+            return result;
+        }
+        public T FilterOne(string NewEndpoint)
+        {
+            var taszk = rest.GetSingle<T>($"{endpoint}{NewEndpoint}");
+            return taszk;
+            //items = await rest.GetAsync<T>(typeof(T).Name);
         }
     }
 }

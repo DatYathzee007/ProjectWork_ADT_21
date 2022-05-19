@@ -6,7 +6,9 @@
         xmlns:local="clr-namespace:IL41ML_HFT_2021221.WpfApp"
         mc:Ignorable="d"
         Title="MainWindow" Height="100" Width="540">
-
+    <Window.DataContext>
+        <local:MainWindowViewModel/>
+    </Window.DataContext>
     <Grid Margin="0,0,0,0">
         <Button Command="{Binding ShowCustomer}" Content="Customer Logic" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="36" Width="170"/>
         <Button Command="{Binding ShowManager}" Content="Manager Logic" HorizontalAlignment="Left" Margin="185,10,0,0" VerticalAlignment="Top" Height="36" Width="170"/>

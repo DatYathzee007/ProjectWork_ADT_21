@@ -116,8 +116,9 @@ namespace IL41ML_HFT_2021221.Logic
 
         public IList<Model> ListModelsByBrand(string brandName)
         {
+            var id = this.brandRepo.GetAll().Single(branditem => branditem.Name == brandName).Id;
             var q = from model in this.modelRepo.GetAll()
-                    where model.BrandId == this.brandRepo.GetAll().Single(branditem => branditem.Name == brandName).Id
+                    where model.BrandId == id
                     select model;
             return q.ToList();
         }
