@@ -1,0 +1,267 @@
+﻿<Window x:Class="IL41ML_HFT_2021221.WpfApp_v2.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:IL41ML_HFT_2021221.WpfApp_v2"
+        mc:Ignorable="d"
+        Title="GlobalPhone WPF App - IL41ML"
+		MinHeight="500"
+		MinWidth="700"
+		WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <Style x:Key="ImmutableDataGrid"
+			   TargetType="DataGrid">
+            <Setter Property="IsReadOnly" Value="True" />
+        </Style>
+
+        <Style TargetType="Button">
+            <Setter Property="Margin" Value="1" />
+            <Setter Property="Padding" Value="0,0,0,0" />
+        </Style>
+
+        <Style TargetType="DataGrid">
+            <Setter Property="Margin" Value="2,2,2,2" />
+        </Style>
+
+        <Style TargetType="Grid">
+            <Setter Property="Margin" Value="1" />
+        </Style>
+
+        <Style TargetType="ItemsControl"
+			   x:Key="TwoColumnGrid">
+            <Setter Property="ItemsPanel">
+                <Setter.Value>
+                    <ItemsPanelTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="9*" />
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="2*" />
+                            </Grid.ColumnDefinitions>
+                        </Grid>
+                    </ItemsPanelTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <TabControl> <!--CRUD methods for tables-->
+            <TabItem Header="CRUD">
+                <TabItem.DataContext>
+                    <local:CrudViewModel />
+                </TabItem.DataContext>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*" />
+                        <RowDefinition Height="1*" />
+                        <RowDefinition Height="1*" />
+                        <RowDefinition Height="1*" />
+                    </Grid.RowDefinitions>
+                    <!-- Brands -->
+                    <GroupBox Grid.Row="0"
+							  Header="Brands">
+                        <ItemsControl Style="{StaticResource TwoColumnGrid}">
+                            <DockPanel Grid.Column="2" LastChildFill="False">
+                                <TextBox Text="{Binding Path=SelectedBrand.Name}" DockPanel.Dock="Top" Margin="2,5,2,5"/>
+                                <TextBox Text="{Binding Path=SelectedBrand.Country}" DockPanel.Dock="Top" Margin="2,5,2,5"/>
+                                <TextBox Text="{Binding Path=SelectedBrand.CEO}" DockPanel.Dock="Top" Margin="2,5,2,5"/>
+                                <TextBox Text="{Binding Path=SelectedBrand.Source}" DockPanel.Dock="Top" Margin="2,5,2,5"/>
+                                <TextBox Text="{Binding Path=SelectedBrand.Foundation}" DockPanel.Dock="Top" Margin="2,5,2,5"/>
+                            </DockPanel>
+                            <!--Buttons' dock-->
+                            <DockPanel Grid.Column="1"
+									   LastChildFill="False">
+                                <Button Content="Read One"
+										Command="{Binding GetOneBrandCommand}"
+										DockPanel.Dock="Top"
+										/>
+                                <TextBox Margin="1"
+                                         PreviewTextInput="TextBlock_InputValidation"
+                                         DockPanel.Dock="Top"
+                                         Text="{Binding Path=InputBrand, Mode=OneWayToSource}">
+                                </TextBox>
+                                <Button Content="Read All"
+										Command="{Binding GetAllBrandCommand}"
+										DockPanel.Dock="Top"
+										/>
+                                <Button Content="Update"
+										Command="{Binding UpdateBrandCommand}"
+										DockPanel.Dock="Top"
+										/>
+                                <Button Content="Create"
+										Command="{Binding CreateBrandCommand}"
+										DockPanel.Dock="Top"
+										/>
+                                <Button Content="Delete"
+										Command="{Binding DeleteBrandCommand}"
+										DockPanel.Dock="Top"
+										/>
+                            </DockPanel>
+                            
+                            <!--The table (data)grid-->
+                            <DataGrid ItemsSource="{Binding Brands}"
+									  Style="{StaticResource ImmutableDataGrid}"
+                                      SelectedItem="{Binding Path=SelectedBrand}"
+									  />
+                        </ItemsControl>
+                    </GroupBox>
+
+                    <!-- Models -->
+                    <GroupBox Grid.Row="1"
+							  Header="Models">
+                        <ItemsControl Style="{StaticResource TwoColumnGrid}">
+                            <!--The buttons' dock-->
+                            <DockPanel Grid.Column="1"
+									   LastChildFill="False">
+                                <Button Content="Read One"
+										Command="{Binding GetOneModelCommand}"
+										DockPanel.Dock="Top"
+										/>
+                                <TextBox Margin="1"
+                                         PreviewTextInput="TextBlock_InputValidation"
+                                         DockPanel.Dock="Top"
+                                         Text="{Binding Path=InputModel, Mode=OneWayToSource}">
+                                </TextBox>
+                                <Button Content="Read All"
+										Command="{Binding GetAllModelCommand}"
+										DockPanel.Dock="Top"
+										/>
+                                <Button Content="Update"
+										Command="{Binding UpdateModelCommand}"
+										DockPanel.Dock="Top"
+										/>
+                                <Button Content="Create"
+										Command="{Binding CreateModelCommand}"
+										DockPanel.Dock="Top"
+										/>
+                                <Button Content="Delete"
+										Command="{Binding DeleteModelCommand}"
+										DockPanel.Dock="Top"
+										/>
+                            </DockPanel>
+
+                            <!--The table (data)grid-->
+                            <DataGrid ItemsSource="{Binding Models}"
+									  Style="{StaticResource ImmutableDataGrid}"
+                                      SelectedItem="{Binding Path=SelectedModel}"
+									  />
+                        </ItemsControl>
+                    </GroupBox>
+
+                    <!-- Services -->
+                    <GroupBox Grid.Row="2"
+							  Header="Services">
+                        <ItemsControl Style="{StaticResource TwoColumnGrid}">
+                            <!--The buttons' dock-->
+                            <DockPanel Grid.Column="1"
+									   LastChildFill="False">
+                                <Button Content="Read One"
+										Command="{Binding GetOneServiceCommand}"
+										DockPanel.Dock="Top"
+										/>
+                                <TextBox Margin="1"
+                                         PreviewTextInput="TextBlock_InputValidation"
+                                         DockPanel.Dock="Top"
+                                         Text="{Binding Path=InputService, Mode=OneWayToSource}">
+                                </TextBox>
+                                <Button Content="Read All"
+										Command="{Binding GetAllServiceCommand}"
+										DockPanel.Dock="Top"
+										/>
+                                <Button Content="Update"
+										Command="{Binding UpdateServiceCommand}"
+										DockPanel.Dock="Top"
+										/>
+                                <Button Content="Create"
+										Command="{Binding CreateServiceCommand}"
+										DockPanel.Dock="Top"
+										/>
+                                <Button Content="Delete"
+										Command="{Binding DeleteServiceCommand}"
+										DockPanel.Dock="Top"
+										/>
+                            </DockPanel>
+
+                            <!--The table (data)grid-->
+                            <DataGrid ItemsSource="{Binding Services}"
+									  Style="{StaticResource ImmutableDataGrid}"
+                                      SelectedItem="{Binding Path=SelectedService}"
+									  />
+                        </ItemsControl>
+                    </GroupBox>
+
+                    <!-- Shops -->
+                    <GroupBox Grid.Row="3"
+							  Header="Shops">
+                        <ItemsControl Style="{StaticResource TwoColumnGrid}">
+                            <!--The buttons' dock-->
+                            <DockPanel Grid.Column="1"
+									   LastChildFill="False">
+                                <Button Content="Read One"
+										Command="{Binding GetOneShopCommand}"
+										DockPanel.Dock="Top"
+										/>
+                                <TextBox Margin="1"
+                                         PreviewTextInput="TextBlock_InputValidation"
+                                         DockPanel.Dock="Top"
+                                         Text="{Binding Path=InputShop, Mode=OneWayToSource}">
+                                </TextBox>
+                                <Button Content="Read All"
+										Command="{Binding GetAllShopCommand}"
+										DockPanel.Dock="Top"
+										/>
+                                <Button Content="Update"
+										Command="{Binding UpdateShopCommand}"
+										DockPanel.Dock="Top"
+										/>
+                                <Button Content="Create"
+										Command="{Binding CreateShopCommand}"
+										DockPanel.Dock="Top"
+										/>
+                                <Button Content="Delete"
+										Command="{Binding DeleteShopCommand}"
+										DockPanel.Dock="Top"
+										/>
+                            </DockPanel>
+
+                            <!--The table (data)grid-->
+                            <DataGrid ItemsSource="{Binding Shops}"
+									  Style="{StaticResource ImmutableDataGrid}"
+                                      SelectedItem="{Binding Path=SelectedShop}"
+									  />
+                        </ItemsControl>
+                    </GroupBox>
+                </Grid>
+            </TabItem>
+
+
+            <!--
+			The SECOND tab includes the 'Internal' logic: Members, Countries, ExpertGroups tables and operations.
+			-->
+            <TabItem Header="Non-CRUD">
+                <Grid>
+                    <StackPanel Grid.Row="1"
+										Orientation="Vertical"
+										HorizontalAlignment="Left"
+										VerticalAlignment="Top">
+                        <Button Content="1st Non-Crud Function" Margin="5,5,5,5"
+										Command="{Binding GetNonCRUDCommand}"
+										/>
+                        <Button Content="2nd Non-Crud Function" Margin="5,5,5,5"
+										Command="{Binding GetNonCRUDCommand}"
+										/>
+                        <Button Content="3nd Non-Crud Function" Margin="5,5,5,5"
+										Command="{Binding GetNonCRUDCommand}"
+										/>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+
+
+            <!--
+			The 3rd tab holds the Administrtor's logic
+			-->
+        </TabControl>
+    </Grid>
+</Window>

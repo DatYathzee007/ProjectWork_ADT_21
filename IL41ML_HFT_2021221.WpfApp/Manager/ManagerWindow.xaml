@@ -6,7 +6,22 @@
         xmlns:local="clr-namespace:IL41ML_HFT_2021221.WpfApp.Manager"
         mc:Ignorable="d"
         Title="ManagerWindow" Height="450" Width="800">
-    <Grid>
-        
+    <Grid Margin="4" Background="LightGray">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5*"/>
+
+            <ColumnDefinition Width="9*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="0" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Top">
+
+        </StackPanel>
+
+        <StackPanel Grid.Column="2" Orientation="Vertical">
+            <TextBlock>Result:</TextBlock>
+        </StackPanel>
+        <ListBox  Background="LightGray"
+                  ItemsSource="{Binding Results}"
+                  Grid.Column="2"
+                  Margin="0,20,0,0"></ListBox>
     </Grid>
 </Window>

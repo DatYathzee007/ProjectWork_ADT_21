@@ -28,6 +28,7 @@ namespace IL41ML_HFT_2021221.Logic
         IList<Shop> ListShopsByBrand(string brand);
 
         IEnumerable<string> ListAllEntityByBrand(string brand);
+        IList<string> ListAll();
 
         IList<string> ListModelsByPriceRange(int lowerBound, int upperBound);
 
@@ -36,5 +37,18 @@ namespace IL41ML_HFT_2021221.Logic
         IEnumerable<string> ListShopsAndServiceINSpecificLocByBrand(string brand, string shoplocation);
 
         Task<IEnumerable<string>> ListShopsAndServiceINSpecificLocByBrandAsync(string brand, string shoplocation);
+
+        // UPDATE CRUD
+        void UpdateModel(Model model);
+        void UpdateService(Service service);
+        void UpdateService(Shop shop);
+        // CREATE CRUD
+        void CreateModel(Model model);
+        void CreateService(Service service);
+        void CreateService(Shop shop);
+        // DELETE CRUD
+        void DeleteModel(Model model);
+        void DeleteService(Service service);
+        void DeleteShop(Shop shop);
     }
 }

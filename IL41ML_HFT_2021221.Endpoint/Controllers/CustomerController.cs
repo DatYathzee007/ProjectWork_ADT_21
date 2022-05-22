@@ -24,6 +24,8 @@ namespace IL41ML_HFT_2021221.Endpoint.Controllers
             this.hub = hub;
         }
 
+        [HttpGet("[action]")] // GET: customer/ListAll"
+        public IList<string> ListAll() { return customerLogic.ListAll(); }
         [HttpGet("[action]")] // GET: customer/ListModels "[action]"
         public IList<Model> ListModels() { return customerLogic.ListModels(); }
         [HttpGet("[action]")] // GET: customer/ListServices

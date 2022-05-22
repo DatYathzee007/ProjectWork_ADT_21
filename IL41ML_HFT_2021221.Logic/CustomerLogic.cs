@@ -76,7 +76,18 @@ namespace IL41ML_HFT_2021221.Logic
             return result.Union(result2).Union(result3).Union(result4);
         }
         */
-
+        public IList<string> ListAll()
+        {
+            IEnumerable<string> result = from brand in this.brandRepo.GetAll()
+                                         select $"Brand: {brand}";
+            IEnumerable<string> result2 = from model in this.modelRepo.GetAll()
+                                          select $"Model: {model}";
+            IEnumerable<string> result3 = from service in this.serviceRepo.GetAll()
+                                          select $"Service: {service}";
+            IEnumerable<string> result4 = from shop in this.shopRepo.GetAll()
+                                          select $"Shop: {shop}";
+            return result.Concat(result2).Concat(result3).Concat(result4).ToList();
+        }
         public IEnumerable<string> ListAllEntityByBrand(string brandName)
         {
             int selectedBrandID = this.brandRepo.GetAll().Single(x => x.Name == brandName).Id;
@@ -234,6 +245,51 @@ namespace IL41ML_HFT_2021221.Logic
                      where shop.BrandId == this.brandRepo.GetAll().Single(x => x.Name == brand).Id
                      select shop;
             return q1.ToList();
+        }
+
+        public void UpdateModel(Model model)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateService(Service service)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateService(Shop shop)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CreateModel(Model model)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CreateService(Service service)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CreateService(Shop shop)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteModel(Model model)
+        {
+            this.modelRepo.Remove(model);
+        }
+
+        public void DeleteService(Service service)
+        {
+            this.serviceRepo.Remove(service);
+        }
+
+        public void DeleteShop(Shop shop)
+        {
+            this.shopRepo.Remove(shop);
         }
     }
 }

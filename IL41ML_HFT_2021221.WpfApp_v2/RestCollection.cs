@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.SignalR.Client;
+﻿using IL41ML_HFT_2021221.Models;
+using Microsoft.AspNetCore.SignalR.Client;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace IL41ML_HFT_2021221.WpfApp
+namespace IL41ML_HFT_2021221.WpfApp_v2
 {
     class NotifyService
     {
@@ -211,10 +212,9 @@ namespace IL41ML_HFT_2021221.WpfApp
             response.EnsureSuccessStatusCode();
         }
 
-        public async Task DeleteAsync(int id, string endpoint)
+        public async Task DeleteAsync(int id, string endpoint) //this.rserv.Delete(id, $"manager/{entityName}");
         {
-            HttpResponseMessage response =
-                await client.DeleteAsync(endpoint + "/" + id.ToString());
+            HttpResponseMessage response = await client.DeleteAsync(endpoint + "/" + id.ToString());
 
             if (!response.IsSuccessStatusCode)
             {
@@ -225,10 +225,9 @@ namespace IL41ML_HFT_2021221.WpfApp
             response.EnsureSuccessStatusCode();
         }
 
-        public void Delete(int id, string endpoint)
+        public void Delete(int id, string endpoint) //this.rserv.Delete(id, $"manager/{entityName}");
         {
-            HttpResponseMessage response =
-                client.DeleteAsync(endpoint + "/" + id.ToString()).GetAwaiter().GetResult();
+            HttpResponseMessage response = client.DeleteAsync(endpoint + "/" + id.ToString()).GetAwaiter().GetResult();
 
             if (!response.IsSuccessStatusCode)
             {
@@ -272,21 +271,19 @@ namespace IL41ML_HFT_2021221.WpfApp
     {
         public event NotifyCollectionChangedEventHandler? CollectionChanged;
 
-        private string endpoint;
+        private string controller;
         private string endpoint2;
         RestService rest;
         List<T> items;
         bool hasSignalR;
         NotifyService notify;
         Type type = typeof(T);
-        public List<T> TempResult;
-        public RestCollection(string baseurl, string endpoint, string endpoint2 = null, string hub = null)
+        public RestCollection(string baseurl, string controller, string endpoint2 = null, string hub = null)
         {
+            this.controller = controller;
             this.endpoint2 = endpoint2;
-            this.endpoint = endpoint;
             hasSignalR = hub is not null;
             this.rest = new RestService(baseurl/*, endpoint*/);
-            this.TempResult = new List<T>();
             if (hasSignalR)
             {
                 this.notify = new NotifyService(baseurl + hub);
@@ -305,18 +302,18 @@ namespace IL41ML_HFT_2021221.WpfApp
                     }
                     else
                     {
-                        Init(endpoint);
+                        Init();
                     }
 
                 });
                 this.notify.AddHandler<T>(type.Name + "Updated", (T item) =>
                 {
-                    Init(endpoint);
+                    Init();
                 });
 
                 this.notify.Init();
             }
-            Init(endpoint);
+            Init();
         }
         //private async Task Init(string endpoint = "")
         //{
@@ -324,12 +321,24 @@ namespace IL41ML_HFT_2021221.WpfApp
         //    //items = await rest.GetAsync<T>(typeof(T).Name);
         //    CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
         //}
-        private async Task Init(string endpoint = "")
+        private async Task Init()
         {
-            items = await rest.GetAsync<T>($"{endpoint}{endpoint2}");
-            TempResult = items;
+            items = await rest.GetAsync<T>($"{this.controller}{endpoint2}");
             //items = await rest.GetAsync<T>(typeof(T).Name);
-            CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset)); // CollectionChanged is null ???????????????????why?
+            CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+        }
+        public void GetAll()
+        {
+            Init();
+        }
+        public void GetOne(string NewEndpoint, int id)
+        {
+            items.Clear();
+            if (rest.GetSingle<bool>($"existing/IsExisting?id={id}&table={type.Name.ToLower()}"))
+            {
+                items.Add(rest.GetSingle<T>(controller + NewEndpoint));
+            }
+            CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
         }
         public IEnumerator<T> GetEnumerator()
         {
@@ -352,11 +361,11 @@ namespace IL41ML_HFT_2021221.WpfApp
         {
             if (hasSignalR)
             {
-                this.rest.PostAsync(item, typeof(T).Name);
+                this.rest.PostAsync(item, "manager/Insert" + typeof(T).Name);
             }
             else
             {
-                this.rest.PostAsync(item, typeof(T).Name).ContinueWith((t) =>
+                this.rest.PostAsync(item, "manager/Insert" + typeof(T).Name).ContinueWith((t) =>
                 {
                     Init().ContinueWith(z =>
                     {
@@ -391,15 +400,15 @@ namespace IL41ML_HFT_2021221.WpfApp
             }
         }
 
-        public void Delete(int id)
+        public void Delete(int id) //this.rserv.Delete(id, $"manager/{entityName}");
         {
             if (hasSignalR)
             {
-                this.rest.DeleteAsync(id, typeof(T).Name);
+                this.rest.DeleteAsync(id, "manager/" + typeof(T).Name);
             }
             else
             {
-                this.rest.DeleteAsync(id, typeof(T).Name).ContinueWith((t) =>
+                this.rest.DeleteAsync(id, "manager/" + typeof(T).Name).ContinueWith((t) =>
                 {
                     Init().ContinueWith(z =>
                     {
@@ -411,29 +420,6 @@ namespace IL41ML_HFT_2021221.WpfApp
                 });
             }
 
-        }
-
-        public async void Filter(string NewEndpoint)
-        {
-            items = await rest.GetAsync<T>($"{endpoint}{NewEndpoint}");
-            CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
-        }
-        public IList<T> FilterList(string NewEndpoint)
-        {
-            var list = rest.Get<T>($"{endpoint}{NewEndpoint}");
-            return list;
-            //items = await rest.GetAsync<T>(typeof(T).Name);
-        }
-        public IEnumerable<T> FilterEnum(string NewEndpoint)
-        {
-            var list = rest.Get<T>($"{endpoint}{NewEndpoint}");
-            return list;
-        }
-        public T FilterOne(string NewEndpoint)
-        {
-            var item = rest.GetSingle<T>($"{endpoint}{NewEndpoint}");
-            return item;
-            //items = await rest.GetAsync<T>(typeof(T).Name);
         }
     }
 }

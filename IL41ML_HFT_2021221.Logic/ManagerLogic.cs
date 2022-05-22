@@ -59,7 +59,7 @@ namespace IL41ML_HFT_2021221.Logic
 
         public void InsertBrand(Brand input)
         {
-            if (input.Name == null || input.Country == null || input.CEO == null || input.Source == null || input.Foundation == /*null*/ new DateTime())
+            if (input.Name == null /*|| input.Country == null || input.CEO == null || input.Source == null || input.Foundation == /*null new DateTime()*/)
             {
                 throw new ArgumentNullException(nameof(input.Name));
             }
@@ -122,5 +122,6 @@ namespace IL41ML_HFT_2021221.Logic
                     throw new ArgumentException("Invalid brand", nameof(data));
             }
         }
+
     }
 }

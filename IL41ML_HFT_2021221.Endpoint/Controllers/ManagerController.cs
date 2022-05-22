@@ -25,17 +25,17 @@ namespace IL41ML_HFT_2021221.Endpoint.Controllers
         {
             this.managerLogic.RemoveEntity(table, id);
         }
-        [HttpPost("[action]")]
+        [HttpPost("[action]")]  // GET: manager/InsertBrand
         public void InsertBrand([FromBody] Brand value)
         {
             managerLogic.InsertBrand(value);
         }
-        [HttpPost("[action]")]
+        [HttpPost("[action]")] // GET: customer/InsertShop
         public void InsertShop([FromBody] Shop value)
         {
             managerLogic.InsertShop(value);
         }
-        [HttpPost("[action]")]
+        [HttpPost("[action]")] // GET: customer/InsertService
         public void InsertService([FromBody] Service value)
         {
             managerLogic.InsertService(value);
