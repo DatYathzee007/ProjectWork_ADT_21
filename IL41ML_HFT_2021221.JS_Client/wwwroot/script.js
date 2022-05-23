@@ -107,7 +107,7 @@ function Update(id) {
     let source = document.getElementById('brandsource').value;
     console.log(name, country, ceo, source);
     fetch('http://localhost:20347/manager/UpdateBrand', {
-        method: 'POST',
+        method: 'PUT',
         headers: { 'Content-Type': 'application/json', },
         body: JSON.stringify(
             { Id: id, Name: name, Country: country, Ceo: ceo, Source: source })
