@@ -56,7 +56,7 @@ function display() {
     brands.forEach(t => {
         document.getElementById('Brandresultarea').innerHTML +=
             "<tr><td>" + t.id + "</td><td>" + t.name + "</td><td>" + t.country + "</td><td>" + t.ceo + "</td><td>" + t.source + "</td><td>" + t.foundation + "</td><td>" +
-        `<button type="button" onclick="remove(${t.Id})">Delete</button>`
+        `<button type="button" onclick="remove(${t.id})">Delete</button>`
             +"</td></tr>";
     });
 }
@@ -89,7 +89,7 @@ function create() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', },
         body: JSON.stringify(
-            { Name: name }, { Country: country }, { Ceo: ceo }, { Source: source })
+            { Name: name,  Country: country, Ceo: ceo, Source: source })
         })
         .then(response => response)
         .then(data =>
