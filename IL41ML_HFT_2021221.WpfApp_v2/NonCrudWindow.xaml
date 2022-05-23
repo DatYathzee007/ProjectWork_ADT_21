@@ -5,7 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:IL41ML_HFT_2021221.WpfApp_v2"
         mc:Ignorable="d"
-        Title="NonCrud Window" Height="450" Width="800">
+        Title="NonCrudWindow" Height="450" Width="800">
+    <Window.DataContext>
+        <local:NonCrudViewModel/>
+    </Window.DataContext>
     <Grid>
         <ListBox Margin="8"
 				 ItemsSource="{Binding Collection}"/>

@@ -30,15 +30,40 @@ namespace IL41ML_HFT_2021221.Endpoint.Controllers
         {
             managerLogic.InsertBrand(value);
         }
-        [HttpPost("[action]")] // GET: customer/InsertShop
+        [HttpPost("[action]")] // GET: manager/InsertModel
+        public void InsertModel([FromBody] Model value)
+        {
+            managerLogic.InsertModel(value);
+        }
+            [HttpPost("[action]")] // GET: manager/InsertShop
         public void InsertShop([FromBody] Shop value)
         {
             managerLogic.InsertShop(value);
         }
-        [HttpPost("[action]")] // GET: customer/InsertService
+        [HttpPost("[action]")] // GET: manager/InsertService
         public void InsertService([FromBody] Service value)
         {
             managerLogic.InsertService(value);
+        }
+        [HttpPut("[action]")] // PUT: manager/UpdateBrand
+        public void UpdateBrand([FromBody] Brand value)
+        {
+            managerLogic.UpdateBrand(value);
+        }
+        [HttpPut("[action]")] // PUT: manager/UpdateModel
+        public void UpdateModel([FromBody] Model value)
+        {
+            managerLogic.UpdateModel(value);
+        }
+        [HttpPut("[action]")] // PUT: manager/UpdateService
+        public void UpdateService([FromBody] Service value)
+        {
+            managerLogic.UpdateService(value);
+        }
+        [HttpPut("[action]")] // PUT: manager/UpdateShop
+        public void UpdateShop([FromBody] Shop value)
+        {
+            managerLogic.UpdateShop(value);
         }
         [HttpPut("[action]")]
         public void ChangeBrandCEO([FromBody] Brand value)

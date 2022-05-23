@@ -44,25 +44,50 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <Style TargetType="ItemsControl"
+			   x:Key="ThreeColumnGrid">
+            <Setter Property="ItemsPanel">
+                <Setter.Value>
+                    <ItemsPanelTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="9*" />
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="3*" />
+                            </Grid.ColumnDefinitions>
+                        </Grid>
+                    </ItemsPanelTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Window.Resources>
+    <Window.DataContext>
+        <local:CrudViewModel/>
+    </Window.DataContext>
     <Grid>
         <TabControl> <!--CRUD methods for tables-->
             <TabItem Header="CRUD">
-                <TabItem.DataContext>
-                    <local:CrudViewModel />
-                </TabItem.DataContext>
+                
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="1*" />
                         <RowDefinition Height="1*" />
-                        <RowDefinition Height="1*" />
-                        <RowDefinition Height="1*" />
+                        <RowDefinition Height="1.1*" />
+                        <RowDefinition Height="1.1*" />
                     </Grid.RowDefinitions>
                     <!-- Brands -->
                     <GroupBox Grid.Row="0"
 							  Header="Brands">
-                        <ItemsControl Style="{StaticResource TwoColumnGrid}">
-                            <DockPanel Grid.Column="2" LastChildFill="False">
+                        <ItemsControl Style="{StaticResource ThreeColumnGrid}">
+                            <DockPanel  Grid.Column="2" LastChildFill="False">
+                                <TextBlock HorizontalAlignment="Right" Text="Name:" DockPanel.Dock="Top" Margin="0,6,0,6"></TextBlock>
+                                <TextBlock HorizontalAlignment="Right" Text="Country:" DockPanel.Dock="Top" Margin="0,6,0,6"></TextBlock>
+                                <TextBlock HorizontalAlignment="Right" Text="CEO:" DockPanel.Dock="Top" Margin="0,6,0,6"></TextBlock>
+                                <TextBlock HorizontalAlignment="Right" Text="Source:" DockPanel.Dock="Top" Margin="0,6,0,6"></TextBlock>
+                                <TextBlock HorizontalAlignment="Right" Text="Foundation:" DockPanel.Dock="Top" Margin="0,6,0,6"></TextBlock>
+                            </DockPanel>
+                            <DockPanel Grid.Column="3" LastChildFill="False">
                                 <TextBox Text="{Binding Path=SelectedBrand.Name}" DockPanel.Dock="Top" Margin="2,5,2,5"/>
                                 <TextBox Text="{Binding Path=SelectedBrand.Country}" DockPanel.Dock="Top" Margin="2,5,2,5"/>
                                 <TextBox Text="{Binding Path=SelectedBrand.CEO}" DockPanel.Dock="Top" Margin="2,5,2,5"/>
@@ -110,7 +135,29 @@
                     <!-- Models -->
                     <GroupBox Grid.Row="1"
 							  Header="Models">
-                        <ItemsControl Style="{StaticResource TwoColumnGrid}">
+                        <ItemsControl Style="{StaticResource ThreeColumnGrid}">
+                            <DockPanel  Grid.Column="2" LastChildFill="False">
+                                <TextBlock HorizontalAlignment="Right" Text="Brand:" DockPanel.Dock="Top" Margin="0,4,0,2"></TextBlock>
+                                <TextBlock HorizontalAlignment="Right" Text="Name:" DockPanel.Dock="Top" Margin="0,3,0,3"></TextBlock>
+                                <TextBlock HorizontalAlignment="Right" Text="ModelName:" DockPanel.Dock="Top" Margin="0,3,0,3"></TextBlock>
+                                <TextBlock HorizontalAlignment="Right" Text="Size:" DockPanel.Dock="Top" Margin="0,3,0,3"></TextBlock>
+                                <TextBlock HorizontalAlignment="Right" Text="Color:" DockPanel.Dock="Top" Margin="0,3,0,3"></TextBlock>
+                                <TextBlock HorizontalAlignment="Right" Text="Price:" DockPanel.Dock="Top" Margin="0,3,0,3"></TextBlock>
+                            </DockPanel>
+                            <DockPanel Grid.Column="3" LastChildFill="False">
+                                <ComboBox ItemsSource="{Binding Brands}" SelectedItem="{Binding SelectedModel.Brand}" Margin="0,0,0,0" SelectedIndex="0" DockPanel.Dock="Top" FontSize="10" Height="23" Padding="0,0,0,0" >
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <Label Content="{Binding Name}"/>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                                <TextBox Text="{Binding Path=SelectedModel.Name}" DockPanel.Dock="Top" Margin="2,2,2,2"/>
+                                <TextBox Text="{Binding Path=SelectedModel.ModelName}" DockPanel.Dock="Top" Margin="2,2,2,2"/>
+                                <TextBox Text="{Binding Path=SelectedModel.Size}" DockPanel.Dock="Top" Margin="2,2,2,2"/>
+                                <TextBox Text="{Binding Path=SelectedModel.Color}" DockPanel.Dock="Top" Margin="2,2,2,2"/>
+                                <TextBox Text="{Binding Path=SelectedModel.Price}" DockPanel.Dock="Top" Margin="2,2,2,2"/>
+                            </DockPanel>
                             <!--The buttons' dock-->
                             <DockPanel Grid.Column="1"
 									   LastChildFill="False">
@@ -152,7 +199,31 @@
                     <!-- Services -->
                     <GroupBox Grid.Row="2"
 							  Header="Services">
-                        <ItemsControl Style="{StaticResource TwoColumnGrid}">
+                        <ItemsControl Style="{StaticResource ThreeColumnGrid}">
+                            <DockPanel  Grid.Column="2" LastChildFill="False">
+                                <TextBlock HorizontalAlignment="Right" Text="Brand:" DockPanel.Dock="Top" Margin="0,4,0,2"></TextBlock>
+                                <TextBlock HorizontalAlignment="Right" Text="Name:" DockPanel.Dock="Top" Margin="0,3,0,3"></TextBlock>
+                                <TextBlock HorizontalAlignment="Right" Text="Country:" DockPanel.Dock="Top" Margin="0,3,0,3"></TextBlock>
+                                <TextBlock HorizontalAlignment="Right" Text="City:" DockPanel.Dock="Top" Margin="0,3,0,3"></TextBlock>
+                                <TextBlock HorizontalAlignment="Right" Text="Address:" DockPanel.Dock="Top" Margin="0,3,0,3"></TextBlock>
+                                <TextBlock HorizontalAlignment="Right" Text="Webpage:" DockPanel.Dock="Top" Margin="0,3,0,3"></TextBlock>
+                                <TextBlock HorizontalAlignment="Right" Text="Phone:" DockPanel.Dock="Top" Margin="0,3,0,3"></TextBlock>
+                            </DockPanel>
+                            <DockPanel Grid.Column="3" LastChildFill="False">
+                                <ComboBox ItemsSource="{Binding Brands}" SelectedItem="{Binding SelectedService.Brand}" Margin="0,0,0,0" SelectedIndex="0" DockPanel.Dock="Top" FontSize="10" Height="23" Padding="0,0,0,0" >
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <Label Content="{Binding Name}"/>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                                <TextBox Text="{Binding Path=SelectedService.ServiceName}" DockPanel.Dock="Top" Margin="2,2,2,2"/>
+                                <TextBox Text="{Binding Path=SelectedService.Country}" DockPanel.Dock="Top" Margin="2,2,2,2"/>
+                                <TextBox Text="{Binding Path=SelectedService.City}" DockPanel.Dock="Top" Margin="2,2,2,2"/>
+                                <TextBox Text="{Binding Path=SelectedService.Address}" DockPanel.Dock="Top" Margin="2,2,2,2"/>
+                                <TextBox Text="{Binding Path=SelectedService.WebPage}" DockPanel.Dock="Top" Margin="2,2,2,2"/>
+                                <TextBox Text="{Binding Path=SelectedService.PhoneNr}" DockPanel.Dock="Top" Margin="2,2,2,2"/>
+                            </DockPanel>
                             <!--The buttons' dock-->
                             <DockPanel Grid.Column="1"
 									   LastChildFill="False">
@@ -194,7 +265,37 @@
                     <!-- Shops -->
                     <GroupBox Grid.Row="3"
 							  Header="Shops">
-                        <ItemsControl Style="{StaticResource TwoColumnGrid}">
+                        <ItemsControl Style="{StaticResource ThreeColumnGrid}">
+                            <DockPanel  Grid.Column="2" LastChildFill="False">
+                                <TextBlock HorizontalAlignment="Right" Text="Brand:" DockPanel.Dock="Top" Margin="0,4,0,2"></TextBlock>
+                                <TextBlock HorizontalAlignment="Right" Text="Service:" DockPanel.Dock="Top" Margin="0,4,0,2"></TextBlock>
+                                <TextBlock HorizontalAlignment="Right" Text="Name:" DockPanel.Dock="Top" Margin="0,3,0,3"></TextBlock>
+                                <TextBlock HorizontalAlignment="Right" Text="Country:" DockPanel.Dock="Top" Margin="0,3,0,3"></TextBlock>
+                                <TextBlock HorizontalAlignment="Right" Text="City:" DockPanel.Dock="Top" Margin="0,3,0,3"></TextBlock>
+                                <TextBlock HorizontalAlignment="Right" Text="Phone:" DockPanel.Dock="Top" Margin="0,3,0,3"></TextBlock>
+                                <TextBlock HorizontalAlignment="Right" Text="Address:" DockPanel.Dock="Top" Margin="0,3,0,3"></TextBlock>
+                            </DockPanel>
+                            <DockPanel Grid.Column="3" LastChildFill="False">
+                                <ComboBox ItemsSource="{Binding Brands}" SelectedItem="{Binding SelectedShop.Brand}" Margin="0,0,0,0" SelectedIndex="0" DockPanel.Dock="Top" FontSize="10" Height="23" Padding="0,0,0,0" >
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <Label Content="{Binding Name}"/>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                                <ComboBox ItemsSource="{Binding Services}" SelectedItem="{Binding SelectedShop.Service}" Margin="0,0,0,0" SelectedIndex="0" DockPanel.Dock="Top" FontSize="10" Height="23" Padding="0,0,0,0" >
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <Label Content="{Binding ServiceName}"/>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                                <TextBox Text="{Binding Path=SelectedShop.Name}" DockPanel.Dock="Top" Margin="2,2,2,2"/>
+                                <TextBox Text="{Binding Path=SelectedShop.Country}" DockPanel.Dock="Top" Margin="2,2,2,2"/>
+                                <TextBox Text="{Binding Path=SelectedShop.City}" DockPanel.Dock="Top" Margin="2,2,2,2"/>
+                                <TextBox Text="{Binding Path=SelectedShop.Phone}" DockPanel.Dock="Top" Margin="2,2,2,2"/>
+                                <TextBox Text="{Binding Path=SelectedShop.Address}" DockPanel.Dock="Top" Margin="2,2,2,2"/>
+                            </DockPanel>
                             <!--The buttons' dock-->
                             <DockPanel Grid.Column="1"
 									   LastChildFill="False">
@@ -246,13 +347,13 @@
 										HorizontalAlignment="Left"
 										VerticalAlignment="Top">
                         <Button Content="1st Non-Crud Function" Margin="5,5,5,5"
-										Command="{Binding GetNonCRUDCommand}"
+										Command="{Binding GetNonCRUDoneCommand}"
 										/>
                         <Button Content="2nd Non-Crud Function" Margin="5,5,5,5"
-										Command="{Binding GetNonCRUDCommand}"
+										Command="{Binding GetNonCRUDtwoCommand}"
 										/>
                         <Button Content="3nd Non-Crud Function" Margin="5,5,5,5"
-										Command="{Binding GetNonCRUDCommand}"
+										Command="{Binding GetNonCRUDthreeCommand}"
 										/>
                     </StackPanel>
                 </Grid>

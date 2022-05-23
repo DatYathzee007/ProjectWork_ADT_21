@@ -68,6 +68,17 @@ namespace IL41ML_HFT_2021221.Logic
                 this.brandRepo.Insert(input);
             }
         }
+        public void InsertModel(Model input)
+        {
+            if (input.Name == null || input.ModelName == null || input.Color == null)
+            {
+                throw new ArgumentNullException(nameof(input.Name));
+            }
+            else
+            {
+                this.modelRepo.Insert(input);
+            }
+        }
 
         public void InsertService(Service input)
         {
@@ -121,6 +132,22 @@ namespace IL41ML_HFT_2021221.Logic
                 default:
                     throw new ArgumentException("Invalid brand", nameof(data));
             }
+        }
+        public void UpdateBrand(Brand input)
+        {
+            this.brandRepo.Update(input);
+        }
+        public void UpdateModel(Model input)
+        {
+            this.modelRepo.Update(input);
+        }
+        public void UpdateService(Service input)
+        {
+            this.serviceRepo.Update(input);
+        }
+        public void UpdateShop(Shop input)
+        {
+            this.shopRepo.Update(input);
         }
 
     }

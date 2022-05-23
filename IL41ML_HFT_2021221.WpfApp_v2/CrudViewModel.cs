@@ -48,7 +48,11 @@ namespace IL41ML_HFT_2021221.WpfApp_v2
         [ICommand]
         private void GetOneBrand()
         {
-            Brands.GetOne($"ListBrandByID/{inputBrand}", int.Parse(inputBrand));
+            inputBrand = inputBrand.Replace(" ","");
+            if (IsDigitsOnly(inputBrand))
+            {
+                Brands.GetOne($"ListBrandByID/{inputBrand}", int.Parse(inputBrand));
+            }
         }
         [ICommand]
         private void GetAllBrand()
@@ -58,10 +62,13 @@ namespace IL41ML_HFT_2021221.WpfApp_v2
         [ICommand]
         private void UpdateBrand()
         {
+
             if (selectedBrand != null)
             {
-               
+                var brand = selectedBrand;
+                Brands.Update(brand);
             }
+
         }
         [ICommand]
         private void CreateBrand()
@@ -69,10 +76,10 @@ namespace IL41ML_HFT_2021221.WpfApp_v2
 
             if (selectedBrand != null)
             {
-                Brand newBrand = new() {Name = selectedBrand.Name, CEO = selectedBrand.CEO, Country = selectedBrand.Country, Foundation = selectedBrand.Foundation, Source = selectedBrand.Source };
+                Brand newBrand = new() { Name = selectedBrand.Name, CEO = selectedBrand.CEO, Country = selectedBrand.Country, Foundation = selectedBrand.Foundation, Source = selectedBrand.Source };
                 Brands.Add(newBrand);
             }
-        } 
+        }
         [ICommand]
         private void DeleteBrand()
         {
@@ -80,13 +87,197 @@ namespace IL41ML_HFT_2021221.WpfApp_v2
             {
                 Brands.Delete(selectedBrand.Id);
             }
-            //this.rserv.Delete(id, $"manager/{entityName}");
         }
         // MODEL CRUD commands
+        [ICommand]
+        private void GetOneModel()
+        {
+            inputModel = inputModel.Replace(" ", "");
+            if (IsDigitsOnly(inputModel))
+            {
+                Models.GetOne($"ListModelByID/{inputModel}", int.Parse(inputModel));
+            }
+        }
+        [ICommand]
+        private void GetAllModel()
+        {
+            this.Models.GetAll();
+        }
+        [ICommand]
+        private void UpdateModel()
+        {
 
+            if (selectedModel != null)
+            {
+                var model = selectedModel;
+                model.BrandId = selectedModel.Brand.Id;
+                Models.Update(model);
+            }
+
+        }
+        [ICommand]
+        private void CreateModel()
+        {
+
+            if (selectedModel != null)
+            {
+                Model newModel = new() {
+                    BrandId = selectedModel.Brand.Id,
+                    Name = selectedModel.Name,
+                    ModelName = selectedModel.ModelName,
+                    Size = selectedModel.Size,
+                    Color = selectedModel.Color,
+                    Price = selectedModel.Price
+                };
+                Models.Add(newModel);
+            }
+        }
+        [ICommand]
+        private void DeleteModel()
+        {
+            if (selectedModel != null)
+            {
+                Models.Delete(selectedModel.Id);
+            }
+        }
         // SERVICE CRUD commands
+        [ICommand]
+        private void GetOneService()
+        {
+            inputService = inputService.Replace(" ", "");
+            if (IsDigitsOnly(inputService))
+            {
+                Services.GetOne($"ListServiceByID/{inputService}", int.Parse(inputService));
+            }
+        }
+        [ICommand]
+        private void GetAllService()
+        {
+            this.Services.GetAll();
+        }
+        [ICommand]
+        private void UpdateService()
+        {
 
+            if (selectedService != null)
+            {
+                var service = selectedService;
+                service.BrandId = selectedService.Brand.Id;
+                Services.Update(service);
+            }
+
+        }
+        [ICommand]
+        private void CreateService()
+        {
+
+            if (selectedService != null)
+            {
+                Service newService = new()
+                {
+                    BrandId = selectedService.Brand.Id,
+                    ServiceName = selectedService.ServiceName,
+                    Country = selectedService.Country,
+                    City = selectedService.City,
+                    Address = selectedService.Address,
+                    WebPage = selectedService.WebPage,
+                    PhoneNr = selectedService.PhoneNr
+                };
+                Services.Add(newService);
+            }
+        }
+        [ICommand]
+        private void DeleteService()
+        {
+            if (selectedService != null)
+            {
+                Services.Delete(selectedService.Id);
+            }
+        }
         // SHOP CRUD commands
+        [ICommand]
+        private void GetOneShop()
+        {
+            inputShop = inputShop.Replace(" ", "");
+            if (IsDigitsOnly(inputShop))
+            {
+                Shops.GetOne($"ListShopByID/{inputShop}", int.Parse(inputShop));
+            }
+        }
+        [ICommand]
+        private void GetAllShop()
+        {
+            this.Shops.GetAll();
+        }
+        [ICommand]
+        private void UpdateShop()
+        {
+
+            if (selectedShop != null)
+            {
+                var shop = selectedShop;
+                shop.BrandId = selectedShop.Brand.Id;
+                shop.ServiceId = selectedShop.Service.Id;
+                Shops.Update(shop);
+            }
+
+        }
+        [ICommand]
+        private void CreateShop()
+        {
+
+            if (selectedShop != null)
+            {
+                Shop newShop = new()
+                {
+                    BrandId = selectedShop.Brand.Id,
+                    ServiceId = selectedShop.Service.Id,
+                    Name = selectedShop.Name,
+                    Country = selectedShop.Country,
+                    City = selectedShop.City,
+                    Phone = selectedShop.Phone,
+                    Address = selectedShop.Address
+                    
+                };
+                Shops.Add(newShop);
+            }
+        }
+        [ICommand]
+        private void DeleteShop()
+        {
+            if (selectedShop != null)
+            {
+                Shops.Delete(selectedShop.Id);
+            }
+        }
+        //NON CRUD FUNCs
+        [ICommand]
+        private void GetNonCRUDone()
+        {
+            // GET: customer/ListAllEntityByBrand?brand={name}
+            string name = "Apple";
+            //var result = new RestCollection<string>("http://localhost:20347/", "customer/", $"ListAllEntityByBrand?brand={name}");
+            var result = new RestCollection<string>("http://localhost:20347/", "customer/", $"ListAllEntityByBrand?brand=Apple");
+            new NonCrudWindow(result).ShowDialog();
+            
+        }
+        [ICommand]
+        private void GetNonCRUDtwo()
+        {
+            // GET: customer/ListAllEntityByBrand?brand={name}
+            new NonCrudWindow(new RestCollection<string>("http://localhost:20347/", "customer/", $"ListAll")).ShowDialog();
+
+        }
+        [ICommand]
+        private void GetNonCRUDthree()
+        {
+            // GET: customer/ListAllEntityByBrand?brand={name}
+            string name = "Apple";
+            //var result = new RestCollection<string>("http://localhost:20347/", "customer/", $"ListAllEntityByBrand?brand={name}");
+            var result = new RestCollection<string>("http://localhost:20347/", "customer/", $"ListAllEntityByBrand?brand=Apple");
+            new NonCrudWindow(result).ShowDialog();
+
+        }
         public CrudViewModel()
         {
             Thread.Sleep(5000);
@@ -99,7 +290,24 @@ namespace IL41ML_HFT_2021221.WpfApp_v2
                 Shops = new(baseUrl, "customer/", "ListShops");
             }
             selectedBrand = new();
+            selectedModel = new();
+            selectedService = new();
+            selectedShop = new();
 
+        }
+        public bool IsDigitsOnly(string str)
+        {
+            if (str != null && str != "")
+            {
+                foreach (char c in str)
+                {
+                    if (c < '0' || c > '9')
+                        return false;
+                }
+
+                return true;
+            }
+            return false;
         }
     }
 }

@@ -1,16 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Specialized;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using IL41ML_HFT_2021221.WpfApp_v2;
+
 
 namespace IL41ML_HFT_2021221.WpfApp_v2
 {
@@ -19,9 +10,10 @@ namespace IL41ML_HFT_2021221.WpfApp_v2
     /// </summary>
     public partial class NonCrudWindow : Window
     {
-        public NonCrudWindow()
+        public NonCrudWindow(INotifyCollectionChanged coll)
         {
-            InitializeComponent();
+            this.DataContext = new NonCrudViewModel(coll);
+            this.InitializeComponent();
         }
     }
 }

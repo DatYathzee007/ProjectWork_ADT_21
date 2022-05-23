@@ -34,5 +34,7 @@ namespace IL41ML_HFT_2021221.Repository
         }
 
         public abstract void Remove(int id);
+
+        
     }
 }

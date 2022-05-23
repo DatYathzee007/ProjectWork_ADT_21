@@ -35,5 +35,21 @@ namespace IL41ML_HFT_2021221.Repository
         {
             this.Remove(this.GetOne(id));
         }
+        public void Update(Model entity)
+        {
+            var oldModel = this.GetOne(entity.Id);
+            if (oldModel is null)
+            {
+                throw new InvalidOperationException($"Model is notexists with id: {entity.Id}");
+            }
+            foreach (var prop in oldModel.GetType().GetProperties())
+            {
+                if (prop.GetAccessors().FirstOrDefault(t => t.IsVirtual) == null)
+                {
+                    prop.SetValue(oldModel, prop.GetValue(entity));
+                }
+            }
+            this.ctx.SaveChanges();
+        }
     }
 }

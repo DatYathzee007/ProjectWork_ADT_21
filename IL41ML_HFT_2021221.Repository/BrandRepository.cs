@@ -36,5 +36,22 @@ namespace IL41ML_HFT_2021221.Repository
         {
             this.Remove(this.GetOne(id));
         }
+
+        public void Update(Brand entity)
+        {
+            var oldBrand = this.GetOne(entity.Id);
+            if (oldBrand is null)
+            {
+                throw new InvalidOperationException($"Brand is notexists with id: {entity.Id}");
+            }
+            foreach (var prop in oldBrand.GetType().GetProperties())
+            {
+                if (prop.GetAccessors().FirstOrDefault(t => t.IsVirtual) == null)
+                {
+                    prop.SetValue(oldBrand, prop.GetValue(entity));
+                }
+            }
+            this.ctx.SaveChanges();
+        }
     }
 }

@@ -88,7 +88,7 @@
         /// <returns><see cref="Id"/>, <see cref="Name"/>, <see cref="Country"/>, <see cref="CEO"/>, <see cref="Source"/>, <see cref="Foundation"/> in a Custom String.</returns>
         public override string ToString()
         {
-            return $"{this.Id}, {this.Name}, {this.Country}, {this.CEO}, {this.Source} " + this.Foundation.GetDateTimeFormats(System.Globalization.CultureInfo.CurrentCulture)[3];
+            return $"{this.Id}, {this.Name}, {this.Country}, {this.CEO}, {this.Source} " + this.Foundation.GetDateTimeFormats(System.Globalization.CultureInfo.CurrentCulture)[1];
         }
 
         /// <inheritdoc/>

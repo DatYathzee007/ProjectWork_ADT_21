@@ -13,5 +13,6 @@ namespace IL41ML_HFT_2021221.Repository
         void Insert(T entity);
         void Remove(T entity);
         void Remove(int id);
+
     }
 }

@@ -39,7 +39,7 @@
         /// Gets or Sets the navigational property for the brand entity.
         /// </summary>
         [NotMapped]
-        [JsonIgnore]
+        //[JsonIgnore]
         public virtual Brand Brand { get; set; }
 
         /// <summary>

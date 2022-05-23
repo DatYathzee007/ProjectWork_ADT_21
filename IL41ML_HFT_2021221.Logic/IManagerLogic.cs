@@ -10,6 +10,7 @@ namespace IL41ML_HFT_2021221.Logic
     public interface IManagerLogic
     {
         void InsertBrand(Brand input);
+        void InsertModel(Model input);
         void InsertShop(Shop input);
         void InsertService(Service input);
         void ChangeBrandCEO(int id, string ceo);
@@ -20,6 +21,10 @@ namespace IL41ML_HFT_2021221.Logic
         void ChangeShopName(int id, string name);
         void ChangeShopPhone(int id, string phone);
         void RemoveEntity(string data, int id);
+        void UpdateBrand(Brand input);
+        void UpdateModel(Model input);
+        void UpdateService(Service input);
+        void UpdateShop(Shop input);
     }
 
 }

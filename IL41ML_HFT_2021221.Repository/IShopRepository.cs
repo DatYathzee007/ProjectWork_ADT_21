@@ -11,5 +11,6 @@ namespace IL41ML_HFT_2021221.Repository
     {
         void ChangePhoneNumber(int id, string newPhoneNumber);
         void ChangeName(int id, string newName);
+        void Update(Shop entity);
     }
 }

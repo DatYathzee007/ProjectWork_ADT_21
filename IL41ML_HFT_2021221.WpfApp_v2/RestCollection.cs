@@ -383,11 +383,11 @@ namespace IL41ML_HFT_2021221.WpfApp_v2
         {
             if (hasSignalR)
             {
-                this.rest.PutAsync(item, typeof(T).Name);
+                this.rest.PutAsync(item, "manager/Update" + typeof(T).Name);
             }
             else
             {
-                this.rest.PutAsync(item, typeof(T).Name).ContinueWith((t) =>
+                this.rest.PutAsync(item, "manager/Update" + typeof(T).Name).ContinueWith((t) =>
                 {
                     Init().ContinueWith(z =>
                     {
