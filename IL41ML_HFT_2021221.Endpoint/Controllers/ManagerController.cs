@@ -31,7 +31,7 @@ namespace IL41ML_HFT_2021221.Endpoint.Controllers
             this.managerLogic.RemoveEntity(table, id);
             this.hub.Clients.All.SendAsync($"{table}Deleted", entityToDelete);
         }
-        [HttpPost("[action]")]  // GET: manager/InsertBrand
+        [HttpPost("[action]")]  // Post: manager/InsertBrand
         public void InsertBrand([FromBody] Brand value)
         {
             managerLogic.InsertBrand(value);

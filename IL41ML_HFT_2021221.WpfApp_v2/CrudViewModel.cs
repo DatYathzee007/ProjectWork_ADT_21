@@ -287,7 +287,7 @@ namespace IL41ML_HFT_2021221.WpfApp_v2
             string baseUrl = "http://localhost:20347/";
             if (!IsInDesignMode)
             {
-                Brands = new(baseUrl, "stock/", "ListBrands");
+                Brands = new(baseUrl, "stock/", "ListBrands", "hub");
                 Models = new(baseUrl, "customer/", "ListModels");
                 Services = new(baseUrl, "customer/", "ListServices");
                 Shops = new(baseUrl, "customer/", "ListShops");

@@ -76,6 +76,11 @@ namespace IL41ML_HFT_2021221.Endpoint
 
             //app.UseHttpsRedirection();
             //app.UseStaticFiles();
+            app.UseCors(x => x
+                .AllowCredentials()
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .WithOrigins("http://localhost:58978"));
 
             app.UseRouting();
 
