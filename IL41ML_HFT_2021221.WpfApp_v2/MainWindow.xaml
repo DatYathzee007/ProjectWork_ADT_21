@@ -66,9 +66,10 @@
         <local:CrudViewModel/>
     </Window.DataContext>
     <Grid>
-        <TabControl> <!--CRUD methods for tables-->
+        <TabControl>
+            <!--CRUD methods for tables-->
             <TabItem Header="CRUD">
-                
+
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="1*" />
@@ -123,7 +124,7 @@
 										DockPanel.Dock="Top"
 										/>
                             </DockPanel>
-                            
+
                             <!--The table (data)grid-->
                             <DataGrid ItemsSource="{Binding Brands}"
 									  Style="{StaticResource ImmutableDataGrid}"
@@ -276,14 +277,14 @@
                                 <TextBlock HorizontalAlignment="Right" Text="Address:" DockPanel.Dock="Top" Margin="0,3,0,3"></TextBlock>
                             </DockPanel>
                             <DockPanel Grid.Column="3" LastChildFill="False">
-                                <ComboBox ItemsSource="{Binding Brands}" SelectedItem="{Binding SelectedShop.Brand}" Margin="0,0,0,0" SelectedIndex="0" DockPanel.Dock="Top" FontSize="10" Height="23" Padding="0,0,0,0" >
+                                <ComboBox ItemsSource="{Binding Brands}" SelectedItem="{Binding SelectedShop.Brand}" Margin="0,0,0,0" DockPanel.Dock="Top" FontSize="10" Height="23" Padding="0,0,0,0" >
                                     <ComboBox.ItemTemplate>
                                         <DataTemplate>
                                             <Label Content="{Binding Name}"/>
                                         </DataTemplate>
                                     </ComboBox.ItemTemplate>
                                 </ComboBox>
-                                <ComboBox ItemsSource="{Binding Services}" SelectedItem="{Binding SelectedShop.Service}" Margin="0,0,0,0" SelectedIndex="0" DockPanel.Dock="Top" FontSize="10" Height="23" Padding="0,0,0,0" >
+                                <ComboBox ItemsSource="{Binding Services}" SelectedItem="{Binding SelectedShop.Service}" Margin="0,0,0,0" DockPanel.Dock="Top" FontSize="10" Height="23" Padding="0,0,0,0" >
                                     <ComboBox.ItemTemplate>
                                         <DataTemplate>
                                             <Label Content="{Binding ServiceName}"/>
@@ -346,20 +347,21 @@
 										Orientation="Vertical"
 										HorizontalAlignment="Left"
 										VerticalAlignment="Top">
+                        <Label>List All Entity By Brand, brand=Apple</Label>
                         <Button Content="1st Non-Crud Function" Margin="5,5,5,5"
 										Command="{Binding GetNonCRUDoneCommand}"
 										/>
+                        <Label>List all entity</Label>
                         <Button Content="2nd Non-Crud Function" Margin="5,5,5,5"
 										Command="{Binding GetNonCRUDtwoCommand}"
 										/>
+                        <Label>List Shops And Services B ySpecific Model id: 1</Label>
                         <Button Content="3nd Non-Crud Function" Margin="5,5,5,5"
 										Command="{Binding GetNonCRUDthreeCommand}"
 										/>
                     </StackPanel>
                 </Grid>
             </TabItem>
-
-
             <!--
 			The 3rd tab holds the Administrtor's logic
 			-->

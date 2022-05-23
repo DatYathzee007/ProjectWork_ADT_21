@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using IL41ML_HFT_2021221.Logic.DataType;
 using IL41ML_HFT_2021221.Models;
 using System;
 using System.Collections.Generic;
@@ -31,6 +32,7 @@ namespace IL41ML_HFT_2021221.WpfApp_v2
         [ObservableProperty]
         private Shop selectedShop;
 
+        //private RestCollection<string> result;
         public RestCollection<Brand> Brands { get; set; }
         public RestCollection<Model> Models { get; set; }
         public RestCollection<Service> Services { get; set; }
@@ -255,8 +257,7 @@ namespace IL41ML_HFT_2021221.WpfApp_v2
         private void GetNonCRUDone()
         {
             // GET: customer/ListAllEntityByBrand?brand={name}
-            string name = "Apple";
-            //var result = new RestCollection<string>("http://localhost:20347/", "customer/", $"ListAllEntityByBrand?brand={name}");
+            //string name = "Apple";
             var result = new RestCollection<string>("http://localhost:20347/", "customer/", $"ListAllEntityByBrand?brand=Apple");
             new NonCrudWindow(result).ShowDialog();
             
@@ -264,17 +265,19 @@ namespace IL41ML_HFT_2021221.WpfApp_v2
         [ICommand]
         private void GetNonCRUDtwo()
         {
-            // GET: customer/ListAllEntityByBrand?brand={name}
-            new NonCrudWindow(new RestCollection<string>("http://localhost:20347/", "customer/", $"ListAll")).ShowDialog();
+            //stock/ListBrandAverages
+            //var result2 = new RestCollection<NameAndDouble>("http://localhost:20347/", "stock/", $"ListBrandAverages");
+            
+            var result = new RestCollection<string>("http://localhost:20347/", "customer/", $"ListAll");
+            new NonCrudWindow(result).ShowDialog();
 
         }
         [ICommand]
         private void GetNonCRUDthree()
         {
-            // GET: customer/ListAllEntityByBrand?brand={name}
-            string name = "Apple";
-            //var result = new RestCollection<string>("http://localhost:20347/", "customer/", $"ListAllEntityByBrand?brand={name}");
-            var result = new RestCollection<string>("http://localhost:20347/", "customer/", $"ListAllEntityByBrand?brand=Apple");
+            // GET: customer/ListShopsAndServicesBySpecificModel/{id}
+            int id = 1;
+            var result = new RestCollection<string>("http://localhost:20347/", "customer/", $"ListShopsAndServicesBySpecificModel/{id}");
             new NonCrudWindow(result).ShowDialog();
 
         }
@@ -293,6 +296,7 @@ namespace IL41ML_HFT_2021221.WpfApp_v2
             selectedModel = new();
             selectedService = new();
             selectedShop = new();
+            //result = new RestCollection<string>("http://localhost:20347/", "customer/", $"ListAllEntityByBrand?brand=Apple");
 
         }
         public bool IsDigitsOnly(string str)

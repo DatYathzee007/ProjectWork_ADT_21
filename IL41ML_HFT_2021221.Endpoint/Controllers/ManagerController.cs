@@ -1,6 +1,8 @@
-﻿using IL41ML_HFT_2021221.Logic;
+﻿using IL41ML_HFT_2021221.Endpoint.Services;
+using IL41ML_HFT_2021221.Logic;
 using IL41ML_HFT_2021221.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,55 +17,67 @@ namespace IL41ML_HFT_2021221.Endpoint.Controllers
     public class ManagerController : ControllerBase
     {
         IManagerLogic managerLogic;
-        public ManagerController(IManagerLogic managerLogic)
+        IHubContext<SignalRHub> hub;
+        public ManagerController(IManagerLogic managerLogic, IHubContext<SignalRHub> hub)
         {
             this.managerLogic = managerLogic;
+            this.hub = hub;
         }
 
         [HttpDelete("{table}/{id}")]
         public void Delete(string table, int id)
         {
+            var entityToDelete = this.managerLogic.GetItem(table, id);
             this.managerLogic.RemoveEntity(table, id);
+            this.hub.Clients.All.SendAsync($"{table}Deleted", entityToDelete);
         }
         [HttpPost("[action]")]  // GET: manager/InsertBrand
         public void InsertBrand([FromBody] Brand value)
         {
             managerLogic.InsertBrand(value);
+            this.hub.Clients.All.SendAsync("BrandCreated", value);
         }
         [HttpPost("[action]")] // GET: manager/InsertModel
         public void InsertModel([FromBody] Model value)
         {
             managerLogic.InsertModel(value);
+            this.hub.Clients.All.SendAsync("ModelCreated", value);
         }
             [HttpPost("[action]")] // GET: manager/InsertShop
         public void InsertShop([FromBody] Shop value)
         {
             managerLogic.InsertShop(value);
+            this.hub.Clients.All.SendAsync("ShopCreated", value);
         }
         [HttpPost("[action]")] // GET: manager/InsertService
         public void InsertService([FromBody] Service value)
         {
             managerLogic.InsertService(value);
+            this.hub.Clients.All.SendAsync("ServiceCreated", value);
         }
         [HttpPut("[action]")] // PUT: manager/UpdateBrand
         public void UpdateBrand([FromBody] Brand value)
         {
             managerLogic.UpdateBrand(value);
+            this.hub.Clients.All.SendAsync("BrandUpdated", value);
         }
         [HttpPut("[action]")] // PUT: manager/UpdateModel
         public void UpdateModel([FromBody] Model value)
         {
             managerLogic.UpdateModel(value);
+            this.hub.Clients.All.SendAsync("ModelUpdated", value);
         }
         [HttpPut("[action]")] // PUT: manager/UpdateService
         public void UpdateService([FromBody] Service value)
         {
             managerLogic.UpdateService(value);
+            this.hub.Clients.All.SendAsync("ServiceUpdated", value);
         }
         [HttpPut("[action]")] // PUT: manager/UpdateShop
         public void UpdateShop([FromBody] Shop value)
         {
             managerLogic.UpdateShop(value);
+            this.hub.Clients.All.SendAsync("ShopUpdated", value);
         }
         [HttpPut("[action]")]
         public void ChangeBrandCEO([FromBody] Brand value)

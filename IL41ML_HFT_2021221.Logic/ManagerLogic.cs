@@ -57,6 +57,32 @@ namespace IL41ML_HFT_2021221.Logic
             this.shopRepo.ChangePhoneNumber(id, phone);
         }
 
+        public object GetItem(string data, int id)
+        {
+            if (data != null)
+            {
+                data = data.ToUpperInvariant();
+            }
+            else
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
+
+            switch (data)
+            {
+                case "BRAND":
+                    return this.brandRepo.GetOne(id);
+                case "MODEL":
+                    return this.modelRepo.GetOne(id);
+                case "SERVICE":
+                    return this.serviceRepo.GetOne(id);
+                 case "SHOP":
+                    return this.shopRepo.GetOne(id);
+                 default:
+                    throw new ArgumentException("Invalid entity", nameof(data));
+            }
+        }
+
         public void InsertBrand(Brand input)
         {
             if (input.Name == null /*|| input.Country == null || input.CEO == null || input.Source == null || input.Foundation == /*null new DateTime()*/)

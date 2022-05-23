@@ -9,6 +9,7 @@ namespace IL41ML_HFT_2021221.Logic
 {
     public interface IManagerLogic
     {
+        object GetItem(string table,int id);
         void InsertBrand(Brand input);
         void InsertModel(Model input);
         void InsertShop(Shop input);

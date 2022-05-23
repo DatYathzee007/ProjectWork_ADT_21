@@ -85,6 +85,9 @@ namespace IL41ML_HFT_2021221.Logic
 
         public IEnumerable<NameAndDouble> ListBrandAverages()
         {
+            //var q1 = this.modelRepo.GetAll().GroupBy(model => model.BrandId).Select(g => new { BrandId = g.Key, Average = g.Average(s => s.Price) });
+            //var q2 = this.brandRepo.GetAll().Join(q1, brand => brand.Id, q1 => q1.BrandId, (brand, query) => new NameAndDouble { Name = brand.Name, Average = query.Average });
+
             var q = from model in this.modelRepo.GetAll()
                     group model by model.BrandId into g
                     select new { BrandId = g.Key, Average = g.Average(s => s.Price) }
