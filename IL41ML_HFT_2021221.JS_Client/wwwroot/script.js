@@ -75,6 +75,7 @@ function remove(id) {
             getdata();
         })
         .catch((error) => { console.error('Error:', error); });
+
 }
 // Post: manager/Insert{entityname}
 function create() {
