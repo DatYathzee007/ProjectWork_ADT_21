@@ -1,7 +1,11 @@
 ﻿namespace IL41ML_HFT_2021221.Models
 {
+    using System;
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
+    using System.Text;
+    using System.Text.Json.Serialization;
 
     /// <summary>
     /// <see cref="Shop"/> Entity class representin the table Shop in the database.

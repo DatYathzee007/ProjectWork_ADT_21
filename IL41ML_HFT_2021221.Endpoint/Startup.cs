@@ -15,12 +15,12 @@ namespace IL41ML_HFT_2021221.Endpoint
 {
     public class Startup
     {
-        /* public Startup(IConfiguration configuration)
-         {
-             Configuration = configuration;
-         }
+       /* public Startup(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
 
-         public IConfiguration Configuration { get; }*/
+        public IConfiguration Configuration { get; }*/
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -36,7 +36,7 @@ namespace IL41ML_HFT_2021221.Endpoint
             services.AddTransient<IModelRepository, ModelRepository>();
             services.AddTransient<IServiceRepository, ServiceRepository>();
             services.AddTransient<IShopRepository, ShopRepository>();
-
+            
             services.AddTransient<DbContext, CustomDbContext>();
             //services.AddSingleton<DbContext, CustomDbContext>();
             services.AddSignalR();

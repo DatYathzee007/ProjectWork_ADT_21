@@ -1,8 +1,14 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using IL41ML_HFT_2021221.Logic.DataType;
 using IL41ML_HFT_2021221.Models;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
+using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace IL41ML_HFT_2021221.WpfApp_v2
@@ -44,7 +50,7 @@ namespace IL41ML_HFT_2021221.WpfApp_v2
         [ICommand]
         private void GetOneBrand()
         {
-            inputBrand = inputBrand.Replace(" ", "");
+            inputBrand = inputBrand.Replace(" ","");
             if (IsDigitsOnly(inputBrand))
             {
                 Brands.GetOne($"ListBrandByID/{inputBrand}", int.Parse(inputBrand));
@@ -117,8 +123,7 @@ namespace IL41ML_HFT_2021221.WpfApp_v2
 
             if (selectedModel != null)
             {
-                Model newModel = new()
-                {
+                Model newModel = new() {
                     BrandId = selectedModel.Brand.Id,
                     Name = selectedModel.Name,
                     ModelName = selectedModel.ModelName,
@@ -234,7 +239,7 @@ namespace IL41ML_HFT_2021221.WpfApp_v2
                     City = selectedShop.City,
                     Phone = selectedShop.Phone,
                     Address = selectedShop.Address
-
+                    
                 };
                 Shops.Add(newShop);
             }
@@ -255,14 +260,14 @@ namespace IL41ML_HFT_2021221.WpfApp_v2
             //string name = "Apple";
             var result = new RestCollection<string>("http://localhost:20347/", "customer/", $"ListAllEntityByBrand?brand=Apple");
             new NonCrudWindow(result).ShowDialog();
-
+            
         }
         [ICommand]
         private void GetNonCRUDtwo()
         {
             //stock/ListBrandAverages
             //var result2 = new RestCollection<NameAndDouble>("http://localhost:20347/", "stock/", $"ListBrandAverages");
-
+            
             var result = new RestCollection<string>("http://localhost:20347/", "customer/", $"ListAll");
             new NonCrudWindow(result).ShowDialog();
 

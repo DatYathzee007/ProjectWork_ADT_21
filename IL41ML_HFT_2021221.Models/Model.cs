@@ -1,7 +1,10 @@
 ﻿namespace IL41ML_HFT_2021221.Models
 {
+    using System;
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
+    using System.Text;
 
     /// <summary>
     /// <see cref="Model"/> Entity class representin the table Model in the database.

@@ -3,6 +3,10 @@ using IL41ML_HFT_2021221.Logic;
 using IL41ML_HFT_2021221.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -39,7 +43,7 @@ namespace IL41ML_HFT_2021221.Endpoint.Controllers
             managerLogic.InsertModel(value);
             this.hub.Clients.All.SendAsync("ModelCreated", value);
         }
-        [HttpPost("[action]")] // GET: manager/InsertShop
+            [HttpPost("[action]")] // GET: manager/InsertShop
         public void InsertShop([FromBody] Shop value)
         {
             managerLogic.InsertShop(value);

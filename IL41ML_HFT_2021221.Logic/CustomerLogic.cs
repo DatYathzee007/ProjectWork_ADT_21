@@ -3,6 +3,7 @@ using IL41ML_HFT_2021221.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace IL41ML_HFT_2021221.Logic
@@ -133,7 +134,7 @@ namespace IL41ML_HFT_2021221.Logic
             return q.ToList();
         }
 
-
+        
         public IList<string> ListModelsByPriceRange(int lowerBound, int upperBound)
         {
             var q = this.modelRepo.GetAll()
@@ -146,7 +147,7 @@ namespace IL41ML_HFT_2021221.Logic
             ((List<string>)q).Add("[Ratio is Price over StorageSize. Simply a cost of 1GB storages.]");
             return q;
         }
-
+        
         /*
         public IList<string> OLDListModelsByPriceRange(int lowerBound, int upperBound)
         {
