@@ -88,6 +88,7 @@ async function getOneBrand() {
             displayBrand();
         });
 }
+//GET: stock / ListModelByID / "id"
 async function getOneModel() {
     let id = document.getElementById('modelid').value;
     await fetch('http://localhost:20347/stock/ListModelByID/' + id)
