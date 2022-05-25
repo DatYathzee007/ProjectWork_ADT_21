@@ -13,6 +13,7 @@ namespace IL41ML_HFT_2021221.JS_Client
     {
         public static void Main(string[] args)
         {
+            System.Threading.Thread.Sleep(5000);
             CreateHostBuilder(args).Build().Run();
         }
 

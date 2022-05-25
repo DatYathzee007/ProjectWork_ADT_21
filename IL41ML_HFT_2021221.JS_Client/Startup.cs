@@ -22,7 +22,7 @@ namespace IL41ML_HFT_2021221.JS_Client
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            Thread.Sleep(5000);
+            
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

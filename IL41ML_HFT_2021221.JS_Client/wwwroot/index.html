@@ -8,15 +8,19 @@
 <body>
     <h1>Brand Editor</h1>
     <div id="formdiv">
+        <label>Brand Id</label>
+        <input type="text" id="brandid" placeholder="ID"/>
         <label>Brand Name</label>
-        <input type="text" id="brandname" />
+        <input type="text" id="brandname" placeholder="Name"/>
         <label>Brand Country</label>
-        <input type="text" id="brandcountry" />
+        <input type="text" id="brandcountry" placeholder="Country"/>
         <label>Brand CEO</label>
-        <input type="text" id="brandceo" />
+        <input type="text" id="brandceo" placeholder="CEO"/>
         <label>Brand Source</label>
-        <input type="text" id="brandsource" />
+        <input type="text" id="brandsource" placeholder="Source"/>
         <button type="button" onclick="create()">Create Brand</button>
+        <button type="button" onclick="getOneBrand()">GetOne by ID</button>
+        <button type="button" onclick="getBrandData()">GetAll</button>
     </div>
 
     <table>
@@ -32,6 +36,43 @@
             </tr>
         </thead>
         <tbody id="Brandresultarea"></tbody>
+    </table>
+
+    <h1>Model Editor</h1>
+    <div id="formdiv">
+        <label>Model Id</label>
+        <input type="text" id="modelid" />
+        <label>Brand Id</label>
+        <input type="text" id="modelbrandid" />
+        <label>Name</label>
+        <input type="text" id="modelname" />
+        <label>Model Name</label>
+        <input type="text" id="modelmodelname" />
+        <label>Size</label>
+        <input type="text" id="modelsize" />
+        <label>Color</label>
+        <input type="text" id="modelcolor" />
+        <label>Price</label>
+        <input type="text" id="modelprice" />
+        <button type="button" onclick="create()">Create Brand</button>
+        <button type="button" onclick="getOneModel()">GetOne by ID</button>
+        <button type="button" onclick="getModelData()">GetAll</button>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Brand</th>
+                <th>Name</th>
+                <th>Model Name</th>
+                <th>Size</th>
+                <th>Color</th>
+                <th>Price</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="Modelresultarea"></tbody>
     </table>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.1/signalr.js"></script>

@@ -1,38 +1,38 @@
-﻿table{
+﻿table {
     width: 100%;
 }
 
-table, th, td{
+table, th, td {
     border: 1px solid black;
 }
 
-table{
+table {
     border-collapse: collapse;
 }
 
-th, td{
-    padding: 5px;
+th, td {
+    padding: 2px;
 }
 
-th{
+th {
     background-color: lightblue;
 }
 
-#formdiv{
+#formdiv {
     display: flex;
     flex-direction: row;
-    margin-bottom: 5px;
+    margin-bottom: 20px;
 }
 
-#formdiv label, button, input{
-    margin: 2px;
-    padding: 7px;
-}
+    #formdiv label, button, input {
+        margin: 10px;
+        padding: 7px;
+    }
 
-#formdiv label{
-    font-weight: bolder;
-}
+    #formdiv label {
+        font-weight: bolder;
+    }
 
-table button{
+table button {
     padding: 2px;
 }
