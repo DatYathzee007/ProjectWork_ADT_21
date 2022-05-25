@@ -1,11 +1,11 @@
 ﻿namespace IL41ML_HFT_2021221.Data
 {
+    using IL41ML_HFT_2021221.Models;
+    using OfficeOpenXml;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
     using System.Text;
-    using IL41ML_HFT_2021221.Models;
-    using OfficeOpenXml;
 
     /// <summary>
     /// A class that called via <see cref="CustomDbContext"/>,

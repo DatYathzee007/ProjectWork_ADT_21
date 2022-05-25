@@ -1,6 +1,5 @@
 ﻿using System.Collections.Specialized;
 using System.Windows;
-using IL41ML_HFT_2021221.WpfApp_v2;
 
 
 namespace IL41ML_HFT_2021221.WpfApp_v2
